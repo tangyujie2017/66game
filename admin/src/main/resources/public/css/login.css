@@ -1,0 +1,35 @@
+@CHARSET "UTF-8";
+
+/**** CSS Reset ****/
+html{height:100%;}
+body,div,ul,li,h1,h2,h3,h4,form,iframe,input,select,p,button,dl,dt,dd,fieldset,textarea,label,del,pre{margin:0;padding:0;outline:none;}
+img,fieldset{border:0}
+li{list-style:none}
+input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}
+input,button,textarea,select{font:99% arial;}
+.clearfix:after{display:table;clear:both;}
+.clearfix{zoom:1;}a{text-decoration:none;color:#666; cursor:pointer;}
+img{ vertical-align:top;}table{border-collapse: collapse; border-spacing: 0; }
+body{font-size:1.4rem;font-size:14px; font-family: "Microsoft Yahei",Arial, Helvetica, sans-serif;text-align:center; }
+input,select,button,textarea{font-family: "Microsoft Yahei",Arial, Helvetica, sans-serif;}
+textarea{ resize:none;} button{ cursor:pointer;}
+body{background:url("../images/login_bg.jpg") center right no-repeat;background-size:cover;background-color:#f3f3f3;}
+input{border-radius:5px;}
+/*** Logo ***/
+.logo{text-align:left;width:auto;height:100px;margin-top:30px;margin-left:35px;position:relative;}
+.logo img{width:100px;height:100px;border-radius:50%;background-color:#fff;}
+.logo span{font-size:22px;color:#444;line-height:100px;margin-left:10px;display:inline-block;}
+/*** Login Box ***/
+.layer_box{background:url("../images/login_box.png") center center no-repeat;opacity: 0.9;filter:alpha(opacity=90);width:313px;height:313px;position:absolute;top:57%;margin-top:-170px;left:50%;margin-left:-150px;}
+#login_box{width:313px;height:313px;position:absolute;top:57%;margin-top:-170px;left:50%;margin-left:-150px;}
+.login_txt{width:240px;height:60px;border-bottom:1px solid #cdcdcd;margin:0 auto;margin-top:10px;}
+.login_txt p{font-size:25px;color:#444;text-align:left;line-height:58px;}
+.name_pwd{width:240px;height:145px;margin:0 auto;margin-top:0px;}
+.login_name,.login_pwd{width:238px;height:40px;border:1px solid #ccc;border-radius:5px;margin-bottom:20px;margin-top:8px;line-height:40px;text-indent:2em;text-indent:2em\9;color:#666;+margin-left:-28px;}
+.head,.pwd{position:absolute;margin-top:22px;margin-top:22px\9;left:45px;}
+.head{margin-top:-48px\0;left:45px;}
+@media screen and (-webkit-min-device-pixel-ratio:0){.head,.pwd{margin-top:-48px;}}
+#logon{display:block;width:238px;height:40px;color:#fff;background-color:#da251c;margin:0 auto;border-radius:5px;line-height:40px;margin-top:18px;}
+.frb{position:absolute;bottom:5px;right:10px;color:white;}
+ /********Login Tips*********/
+.login_input_tips{cursor:auto;width:210px;height:38px;line-height:39px;text-align:left;position:absolute;margin-top:10px;margin-left:28px;color:#999;}

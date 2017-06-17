@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:tiles="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+	<head lang="en">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="_csrf" th:content="${_csrf.token}"/>
+        <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+		<title>168后台管理系统</title>
+		<link href="css/login.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+	</head>
+	<body>
+		<!-- logo -->
+		<div class="logo flt">
+			<img alt="168信息" src="images/login_bg.png"/>
+			<span>168后台管理系统</span>
+		</div>
+		<!-- login box -->
+		<div class="layer_box">
+		   <div th:if="${param.error}" class="loginerror">
+		      <span>!</span>无效账号或密码，请确认!
+	       </div>
+	       <div th:if="${param.logout}" class="loginerror">
+		      <span>!</span>您已经退出系统,请重新登录!
+	       </div>
+		
+		</div>
+		<div id="login_box">
+			<div class="login_txt">
+				<p>登录</p>
+			</div>
+			<form  th:action="@{/login}" method="post" >
+			<div class="name_pwd">
+				&nbsp;<br/>
+				
+				<input id="loginName" class="login_name" name="username" type="text" value="" placeholder="请输入用户名" autocomplete="off" />
+				<img class="head" src="images/login_name.png" />
+				
+				<input id="loginPwd" class="login_pwd" name="password" type="password" value="" placeholder="请输入密码" autocomplete="off" />
+				<img class="pwd" src="images/login_pwd.png" />
+			</div>
+			<div><input id="logon" type="submit" value="登录"/></div>
+			<!-- <a id="logon"  onclick="login();">登&nbsp;&nbsp;&nbsp;&nbsp;录</a> -->
+			</form>
+		</div>
+		<p class="frb">蜀ICP备030779-2号-1  168信息有限公司 版权所有</p>
+	</body>
+	<script type="text/javascript">
+		$(".name_pwd input").focus(function(){
+			$(this).prev().html("");
+		});
+		$(".name_pwd input").blur(function(){
+			if($(this).val()==""){
+				$(this).prev().html($(this).prev().attr("default_txt"));
+			}
+		});
+		
+	</script>
+</html>

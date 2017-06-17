@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+<meta charset="UTF-8" />
+<title>编辑用户</title>
+<head th:include="tag::tag" />
+<script type="text/javascript" th:src="@{/js/layer/layer.js}"></script>
+<script type="text/javascript" th:src="@{/js/system/user_edit.js}" ></script>
+</head>
+<body>
+	<div>
+		<!-- <div class="breadcrumbs" id="breadcrumbs">
+			<ul class="breadcrumb">
+				<li><i class="ace-icon fa fa-home home-icon"></i> <a href="/">首页</a></li>
+				<li><a th:href="@{/user/}">用户</a></li>
+				<li>编辑用户</li>
+			</ul>
+		</div> -->
+		<div class="page-header">&nbsp;</div>
+		
+		<div class="col-md-12">
+		<form method="post" th:object="${userEditCmd}"
+				th:action="@{/user/edit}" id="editUserForm">
+				<input type="hidden" id="id" name="id" th:value="*{id}" />
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">编辑用户</h3>
+						</div>
+						<table class="table table-bordered g-table g-table-form">
+							<tr>
+								<td class="g-required">手机号码：</td>
+								<td>
+									<div class="col-md-3"><input type="text" name="mobile" id="mobile" class="form-control" th:value="*{mobile}" /></div>
+								</td>
+							</tr>
+							<tr>
+								<td  class="g-required">真实姓名：</td>
+								<td>
+									<div class="col-md-3"><input type="text" name="realName" id="realName" class="form-control"  th:value="*{realName}" /></div>
+								</td>
+							</tr>
+							<tr>
+								<td class="g-required">角色：</td>
+								<td>
+									<div class="col-md-6">
+									<span class="block input-icon input-icon-right"><label
+							th:each="role : ${allRoles}"> <input type="checkbox" th:field="*{roles}"
+								name="roles" th:value="${role.id}" /> <span
+								class="lbl" th:text="${role.details}"></span>&nbsp;&nbsp;
+						</label></span></div>
+								</td>
+							</tr>
+							<tr>
+								<td>状态：</td>
+								<td><div class="col-md-3"><select
+							id="locked" name="locked" class="form-control">
+							    <option th:selected="*{locked}?0:selected" value="false">启用</option>
+							    <option th:selected="*{locked}?selected:0" value="true">停用</option>
+								<!-- <option  value="false">启用</option>
+								<option value="true">停用</option> -->
+						</select></div></td>
+							</tr>
+						</table>
+					</div>
+					<div class="row">
+						<div class="text-center col-md-4"><button class="btn g-btn-primary" onclick="submitForm();" type="button" data-last="Finish">提交</button></div>
+					</div>
+				</form>
+
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:tiles="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+	<head lang="en">
+	
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="_csrf" th:content="${_csrf.token}"/>
+        <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+		<title>168后台管理系统</title>
+		<link href="css/index.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="css/default/default.css" />
+		<script charset="utf-8" src="css/default/kindeditor-min.js"></script>
+		<script charset="utf-8" src="css/default/lang/zh_CN.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/popup.js"></script>
+		<script type="text/javascript" src="js/user/product.js"></script>
+	</head>
+	<body>
+		<div class="tab_lists">
+			<div class="tab_names">
+				<a class="tabs">发布产品</a>
+			</div>
+			<div class="content_detail goods_lists">
+				<div class="infos_box">
+					<table class="add_news_table" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td class="news_td">产品名称：</td>
+							<td><input class="w300h28" type="text" id="add_product_name" value="" /></td>
+						</tr>
+						<tr>
+							<td class="news_td">产品图片：</td>
+							<td>
+								<img id="image_view" style="width:100px;height:80px;" src="images/iphone-6.jpg"/>
+								<a class="choose_img">选择</a>
+								<input id="upload_image" class="file_upload"   type="file"   accept="image/*" ></input>
+							</td>
+						</tr>
+						<tr>
+							<td class="news_td">产品简介：</td>
+							<td>
+								<textarea class="txtarea" id="add_product_desc"></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td class="news_td">内容：</td>
+							<td>
+								<div class="txt_container">
+									<textarea name="content" id="add_product_context"></textarea>
+								</div>
+							</td>
+						</tr>
+					</table>
+					<input class="submit_btn" type="submit" id="add_product_submit" value="提交" />
+				</div>
+				
+			</div>
+		</div>
+		<script>
+		var header = $("meta[name='_csrf_header']").attr("content");
+		var token = $("meta[name='_csrf']").attr("content");
+		var editor = KindEditor.create('textarea[name="content"]', {
+	        uploadJson : '/richTextArea/fileUpload',
+	        extraFileUploadParams : { 
+	        	"_csrf":token
+            }, 
+	        fileManagerJson : '/richTextArea/fileManager',  
+	        allowFileManager : true,
+	        items : ['source', '|', 'undo', 'redo', '|', 'preview', 'template', 'cut', 'copy', 'paste',
+	                 'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+	                 'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+	                 'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
+	                 'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+	                 'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image','multiimage',
+	                 'flash', 'media', 'insertfile', 'table', 'hr', 'emoticons', 'baidumap', 'pagebreak',
+	                 'anchor', 'link', 'unlink']
+	    });
+		</script>
+	</body>
+</html>

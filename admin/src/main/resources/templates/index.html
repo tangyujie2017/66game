@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:tiles="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+	<head lang="en">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="_csrf" th:content="${_csrf.token}"/>
+        <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+		<title>168后台管理系统</title>
+		<link href="/css/index.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/popup.js"></script>
+		<script type="text/javascript" src="js/user/index.js"></script>
+	</head>
+	
+	<body class="index_body">
+		<div class="container">
+			<!-- Left Bar begin -->
+			<div id="left_bar">
+				<div class="citic_logo">
+					<img alt="168信息" src="images/login_bg.png"/>
+				</div>
+				<div class="leftsidebar_box">
+					<span class="left_active"></span>
+					<dl sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MANAGE','ROLE_INFO_ADD')" class="system_log">
+						<dt>信息发布<img src="images/left_down_ico.png"/></dt>
+						<dd ><a href="#" data="/releaseSlide">轮播图发布</a></dd>
+						<dd ><a href="#" data="/releaseInfos">图文信息发布</a></dd>
+						<dd ><a href="#" data="/releaseProducts">产品发布</a></dd>
+					</dl>
+					<span class="left_active"></span>
+					<dl sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MANAGE','ROLE_CUSTOMER')" class="system_log">
+						<dt>客户管理<img src="images/left_down_ico.png"/></dt>
+						<dd ><a href="#" data="/customerManage">客户管理</a></dd>
+						<dd ><a href="#" data="/customerRole">客户角色</a></dd>
+						<dd ><a href="#" data="/customerPermission">客户资源</a></dd>
+						
+					</dl>
+					<span class="left_active"></span>
+					<dl sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MANAGE')" class="statistics">
+						<dt>系统维护<img src="images/left_down_ico.png" /></dt>
+						<dd><a href="#" data="/roleManage">角色管理</a></dd>
+						<dd><a href="#" data="/usersManage">用户管理</a></dd>
+						<dd><a href="#" data="/usersAuthority">权限管理</a></dd>
+					</dl>
+				</div>
+			</div>
+			<!-- Left Bar End -->
+			<!-- Top Bar Begin -->
+			<div id="top_bar">
+				<div class="top_title">
+					<p>168信息平台后台管理系统</p>
+				</div>
+				<div class="right_tools">
+					<a class="manage_role"><span sec:authentication="name">系统管理员</span></a>
+					<img class="v_line" src="images/lr.png" />
+					<a class="edit modify_pwd"><img src="images/edit.png" alt="修改密码" /></a>
+					<a class="edit_tips"><img src="images/tips.png" alt="修改密码" /></a>
+					<a class="exit" href="/login?logout"><img src="images/exit.png" alt="安全退出" /></a>
+					<a class="exit_tips"><img src="images/exit_tips.png" alt="安全退出" /></a>
+				</div>
+			</div>
+			<!-- Top Bar End -->
+			<!-- Iframe Content begin -->
+			<div id="content">
+				<div class="tab_lists wel_index">
+					<div class="tab_names">
+						<a class="tabs">欢迎页</a>
+					</div>
+					<div class="content_detail">
+						<h1 class="welcome">欢迎您来到168信息平台后台管理系统</h1>
+					</div>
+				</div>
+				
+				<iframe id="iframe"></iframe>
+			</div>
+		</div>
+		<!-- 修改密码提示 -->
+		<div class="modifyPwd_tipsBox">
+			<div class="row_title">
+				<img class="alert_circle" src="images/alert_circle.png" />修改密码<a href="javascript:void(0)" title="关闭窗口" class="close_btn" id="closeBtn"><img class="alert_line" src="images/alert_line.png" alt="" />×</a>
+			</div>
+			<div class="setPwd">
+				<span class="setPwd_span">原密码：</span>
+				<input type="password" class="setPwd_input" />
+			</div>
+			<div class="setPwd">
+				<span class="setPwd_span">新密码：</span>
+				<input type="password" class="setPwd_input" />
+			</div>
+			<div class="setPwd">
+				<span class="setPwd_span">确认密码：</span>
+				<input type="password" class="setPwd_input" />
+			</div>
+			<div class="sort_btn">
+				<a class="close_btn concle">取消</a><a id="submit">确定</a>
+			</div>
+		</div>
+		<script type="text/javascript">
+			$(function(){
+				//top bar tips
+				$(".edit_tips,.exit_tips").css("display","none");
+				$(".edit img").hover(function(){
+					$(".edit_tips").css("display","block");
+				},function(){
+					$(".edit_tips").css("display","none");
+				});
+				$(".exit img").hover(function(){
+					$(".exit_tips").css("display","block");
+				},function(){
+					$(".exit_tips").css("display","none");
+				});
+				//left bar slide
+				$(".leftsidebar_box dd").hide();
+				$(".leftsidebar_box dt").click(function(){
+					$(this).parent().find('dd').toggleClass("menu_chioce");
+					$(this).parent().find('dd').slideToggle("fast");
+					var menuDis=$(this).parent().find('dd').attr("class");
+					if(menuDis==""){
+						$(this).parent().find('img').attr("src","images/left_down_ico.png");
+					}else{
+						$(this).parent().find('img').attr("src","images/left_up_ico.png");
+					}
+				});
+				//left bar active
+				$(".left_active").css("display","none");
+				$(".leftsidebar_box dl").hover(function(){
+					$(this).prev().css("display","block");
+					$(this).prev().stop().animate({
+						marginLeft:8
+					},200);
+				},function(){
+					$(this).prev().stop().animate({
+						marginLeft:-308
+					},200);
+				});
+			});
+			//Left lists switch
+			$(function(){
+				$(".tabs").css("borderTop","2px solid #da251c");
+				//Left Menu Comein
+				$(".leftsidebar_box dd a").click(function(){
+					$(".leftsidebar_box").find('a').removeClass("menu_switch");
+					$(this).addClass("menu_switch");
+					$(".tab_lists").css("display","none");
+					$("#iframe").css("display","block");
+					$("#iframe").attr("src",$(this).attr("data"));
+				});
+				
+			});
+		</script>
+	</body>
+</html>

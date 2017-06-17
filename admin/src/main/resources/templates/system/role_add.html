@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+<meta charset="UTF-8" />
+<title>添加角色</title>
+<head th:include="tag::tag" />
+<script type="text/javascript" th:src="@{/js/layer/layer.js}"></script>
+<script type="text/javascript" th:src="@{/js/system/role_edit.js}" ></script>
+</head>
+<body>
+	<div>
+		<div class="page-header">&nbsp;</div>
+		<div class="col-md-12">
+		<form method="post" th:action="@{/role/add}" id="roleForm">
+				<input type="hidden" id="id" name="id" />
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">添加角色</h3>
+						</div>
+						<table class="table table-bordered g-table g-table-form">
+							<tr>
+								<td class="g-required">角色名称：</td>
+								<td>
+									<div class="col-md-3"><input type="text" name="details" id="details" class="form-control" /></div>
+								</td>
+							</tr>
+							<tr>
+								<td  class="g-required">角色标识：</td>
+								<td>
+									<div class="col-md-3"><input type="text" name="name" id="name" class="form-control"  /></div>
+								</td>
+							</tr>
+							
+						</table>
+					</div>
+					<div class="row">
+						<div class="text-center col-md-4"><button class="btn g-btn-primary" onclick="submitForm();" type="button" data-last="Finish">提交</button></div>
+					</div>
+				</form>
+
+		</div>
+	</div>
+</body>
+</html>

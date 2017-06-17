@@ -1,0 +1,305 @@
+@CHARSET "UTF-8";
+
+/**** CSS Reset ****/
+	html,body{height:100%;overflow-x:hidden;overflow-y:auto\9;overflow-x:hidden\9;}
+	body,div,ul,li,h1,h2,h3,h4,form,iframe,input,select,p,button,dl,dt,dd,fieldset,textarea,label,del,pre{margin:0;padding:0;}
+	.index_body{overflow:auto;}
+	img,fieldset{border:0}
+	li{list-style:none}form{background-color:#fff;}
+	input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}
+	input,textarea,select{font-family: "Microsoft Yahei",Arial, Helvetica, sans-serif;font:99% arial;font-size:13px;color:#666;}
+	.clearfix:after{content:"";display:table;clear:both;}
+	.clearfix{zoom:1;}a{text-decoration:none;color:#666; cursor:pointer;}
+	img{ vertical-align:top;}table{border-collapse: collapse; border-spacing: 0; }
+	body{background-color:#f5f5f5;font-size:1.4rem;font-size:14px; font-family: "Microsoft Yahei",Arial, Helvetica, sans-serif;color:#999;}
+	textarea{ resize:none;} button{ cursor:pointer;}
+	.container{padding-left:220px;height:100%;min-width:1000px;}
+/**************Left Bar Style****************/
+	#left_bar{width:220px;margin-left:-220px;height:100%;background:linear-gradient(to bottom,#f90 40%,#f40 100%);float:left;position:relative;}
+	.citic_logo{margin:0 auto;width:148px;margin-top:15px;text-align:center;padding-bottom:20px;}
+	.citic_logo img{width:100px;height:100px;border-radius:50%;}
+	.leftsidebar_box{width:220px;height:auto !important;overflow:visible !important;z-index:999;position:relative;padding-top:15px;}
+	.leftsidebar_box span{*margin-left:-100px;}
+	.leftsidebar_box dt{margin-left:25px;padding-left:40px;padding-right:10px;background-repeat:no-repeat;background-position:10px center;color:#f5f5f5;font-size:16px;position:relative;height:44px;line-height:44px;cursor:pointer;margin-bottom:10px;}
+	.leftsidebar_box dd{padding-left:75px;line-height:35px;text-align:left;}
+	.leftsidebar_box dd a{color:#f5f5f5;line-height:20px;position:relative;}
+	.menu_switch{left:12px;color:#f5f5f5;line-height:20px;position:relative;}
+	.leftsidebar_box dt img{position:absolute;right:35px;top:16px;width:12px;}
+	.system_log dt{background-image:url(../images/business_ico.png);}
+	.syetem_management dt{background-image:url(../images/info_ico.png);}
+	.source dt{background-image:url(../images/census_ico.png);}
+	.statistics dt{background-image:url(../images/service_ico.png);}
+	.leftsidebar_box dl dd:last-child{padding-bottom:10px;}
+	.leftsidebar_box p{margin-left:15px;margin-top:1px;}
+	.left_active{margin-left:-308px;*margin-left:-308px;position:absolute;margin-top:2px;text-align:left;z-index:0;display:block;width:200px;height:40px;background-color:#f30;opacity:.8;border-radius:30px;}
+	
+/**************Top Bar Style****************/
+	#top_bar{height:75px;background-color:#fff;min-width:1055px;position:relative;}
+	.top_title{width:400px;height:75px;margin-left:30px;line-height:72px;float:left;}
+	.top_title p{font-size:23px;color:#555;}
+	.right_tools{width:340px;height:75px;margin-left:20px;line-height:75px;float:right;position:relative;}
+	.manage_role{display:inline-block;line-height:70px;float:left;cursor:auto;}
+	.manage_role span{margin-left:10px;display:block;text-align:right;width:168px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+	.v_line{line-height:75px;float:left;margin-left:25px;padding-top:27px;margin-right:25px;}
+	.edit{float:left;line-height:70px;padding-top:27px;margin-left:0px;}
+	.exit{float:right;line-height:70px;padding-top:27px;margin-right:30px;}
+	.edit_tips{display:block;width:64px;height:28px;position:absolute;margin-top:46px;margin-left:212px;}
+	.exit_tips{display:block;width:64px;height:28px;position:absolute;margin-top:47px;margin-left:265px;}
+/*************iframe content Style***************/
+	#iframe{width:99.8%;height:102.5%;float:right;border:1px solid #f5f5f5;display:none;overflow-y:auto;}
+	#content{width:99.8%;height:85.5%;*height:96.8%;float:left;min-width:1050px;}
+	.tab_lists{clear:both;width:98%;height:100%;text-align:center;margin:0 auto;}
+	.tab_names{clear:both;width:100%;height:30px;padding-top:10px;text-align:left;margin:0 auto;}
+	.tabs{position:relative;display:block;width:100px;height:30px;color:#666;background-color:#fff;border-left:1px solid #ddd;border-top:2px solid #f60;border-right:1px solid #ddd;line-height:30px;text-align:center;}
+	.content_detail{clear:both;position:relative;width:101%;height:95%;overflow-y:auto;margin:0 auto;background-color:#fff;margin-top:1px;border-left:1px solid #ddd;border-right:1px solid #ddd;}
+	.welcome{font-size:38px;position:absolute;top:42%;left:22%;}
+	.wel_index{*height:500px;}.dis1{height:534px;}
+/************Page number***************/
+	.pages{width:100%;height:40px;margin:10px 0;}
+	.total{float:left;width:220px;height:40px;line-height:40px;font-size:12px;}
+	.page_list{float:right;width:450px;height:40px;line-height:40px;}
+	.page_list a{margin-left:10px;display:block;width:30px;height:20px;float:left;border:1px solid #ddd;font-size:12px;line-height:20px;margin-top:10px;}
+	.page_list span{margin-left:10px;display:block;height:20px;float:left;font-size:12px;line-height:20px;margin-top:10px;}
+	.page_list a img{padding-top:4px;}
+	.page_list a:hover{color:#f60;border:1px solid #f60;}
+/*************goods sorts**************/
+	.goods_search{width:100%;height:55px;border-bottom:1px solid #ddd;line-height:70px;}
+	.goods_search input{width:120px;height:25px;line-height:25px;border:1px solid #ddd;float:left;margin-top:15px;margin-left:12px;text-indent:0.5em;}
+	.search_select{width:auto;height:27px;*height:42px;border:1px solid #ddd;float:left;margin-top:15px;margin-left:12px;line-height:27px;}
+	.query{width:60px;height:26px;display:block;float:left;margin-left:10px;background-color:#f60;margin-top:15px;line-height:26px;color:white;}
+	.search_lr{float:left;margin-left:15px;margin-right:6px;margin-top:21px;}
+	.add,.delete{width:60px;height:25px;display:block;float:left;border:1px solid #ddd;margin-left:10px;margin-top:15px;line-height:25px;color:#f60;}
+	.add img,.delete img{padding-top:7px;*padding-top:5px;padding-right:3px;}
+	/*********Goods table*********/
+	.goods_table{margin:0 auto;width:95%;height:auto;clear:both;font-size:12px;cellpadding:0;cellspacing:0;border-bottom:1px solid #ddd;collapse:collapse;}
+	thead td{font-size:14px;color:#666;height:50px;}tbody td{padding:10px 0;}
+	.goods_table td{border-bottom:1px solid #f2f2f2;text-align:left;}
+	.goods_table td a{margin-right:10px;color:#f60;}
+	.goods_table td a:hover{text-decoration:underline;}
+	/*************Alert Div Edit Box****************/
+	.mask{margin:0;padding:0;border:none;width:100%;height:100%;background:#444;opacity:0.6;filter:alpha(opacity=60);z-index:9;position:fixed;top:0;left:0;display:none;}
+	#add_sorts{position:absolute;margin-left:-240px;margin-top:-244px;left:50%;top:50%;background:white;min-width:380px;min-height:350px;border-top:2px solid #f60;z-index:10;display:none;}
+	.row_title{background:#f7f7f7;padding:0px 10px;line-height:40px;height:40px;color:#555;font-size:15px;text-align:left;}
+	.alert_circle{padding-top:12px;margin-right:5px;}
+	.alert_line{padding-top:13px;margin-right:10px;}
+	.row{margin:0 auto;height:40px;line-height:45px;padding-left:18px;margin-top:10px;}
+	.row span{clear:both;display:block;width:80px;float:left;font-size:13px;color:#666;text-align:right;}
+	.close_btn{font-size:25px;font-weight:10;color:#999;text-decoration:none;float:right;padding-right:5px;line-height:40px;}
+	#txtName,#txtPwd{float:left;height:25px;width:200px;border:1px solid #ddd;margin-top:8px;font-size:12px;color:#999;text-indent:0.8em;}
+	.sort_btn{width:100%;height:35px;clear:both;float:left;position:absolute;bottom:0px;background-color:#f4f4f4;}
+	.sort_btn a{margin-top:5px;float:right;margin-right:10px;text-align:center;display:block;width:60px;height:28px;color:White;line-height:28px;font-size:13px;}
+	.concle{background-color:#999;color:#fff;}
+	#submit{background-color:#f60;}
+	/***************Alert Goods Detail****************/
+	.add_goods_area{min-width:360px;height:auto;padding-left:15px;line-height:35px;display:block;font-size:13px;cursor:auto;margin-bottom:1px;float:left;}
+	.store_sort_name{display:block;margin-right:10px;float:left;}
+	.scope_area{display:block;float:left;width:500px;text-align:left;}
+	.goods_query_detail{width:450px;height:520px;position:absolute;margin-left:-240px;margin-top:-264px;left:50%;top:50%;background:white;border-top:2px solid #f60;z-index:10;display:none;}
+	.goods_name{min-width:360px;height:35px;padding-left:15px;line-height:35px;display:block;font-size:13px;cursor:auto;margin-bottom:1px;clear:both;}
+	.ShippingMethod{margin-left:85px;width:360px;height:35px;padding-left:0px;line-height:35px;display:block;font-size:13px;cursor:auto;margin-bottom:1px;}
+	.first_method{float:left;margin-left:9px;margin-right:2px;display:block;position:absolute;}
+	.sec_method{float:left;margin-left:85px;margin-right:2px;display:block;position:absolute;}
+	.name_first{height:80px;padding-left:15px;}
+	.sort_name{clear:both;display:block;width:80px;text-align:right;float:left;}
+	.goods_pic{margin-top:10px;display:block;width:80px;height:80px;border:1px solid #ddd;float:left;margin-left:5px;}
+	.goods_val{display:block;float:left;margin-left:5px;}
+	.goods_sec_val{clear:both;display:block;margin-left:85px;line-height:28px;}
+	/***************Alert Check Goods Detail****************/
+	.on_sale{width:60px;height:23px;line-height:23px;border:1px solid #ddd;}
+	.on_percent{width:35px;height:23px;line-height:23px;border:1px solid #ddd;}
+	.startime,.overtime{width:110px;height:23px;line-height:23px;border:1px solid #ddd;}
+	/***************Alert Customs Detail****************/
+	.customs_detail{width:620px;height:685px;position:absolute;margin-left:-340px;margin-top:-270px;left:50%;top:50%;background:white;border-top:2px solid #f60;z-index:10;display:none;}
+	.customs_input{width:200px;height:23px;line-height:23px;font-size:12px;border:1px solid #ddd;text-indent:1em;}
+	.open_time{width:80px;height:23px;border:1px solid #ddd;text-indent:0.6em;}
+	.detail_addr{width:400px;height:23px;border:1px solid #ddd;text-indent:0.6em;}
+	.customs_addr{width:auto;height:25px;border:1px solid #ddd;margin-right:3px;}
+	.pic_upload{width:65x;height:25px;font-size:12px;}
+	/***************Alert Order Detail****************/
+	.order_inform{width:500px;height:565px;position:absolute;margin-left:-320px;margin-top:-270px;left:50%;top:50%;background:white;border-top:2px solid #f60;z-index:10;display:none;overflow-y:auto;}
+	input{color:#666;}
+	.first_row{margin-top:8px;}
+	.order_titles{width:93%;margin:0 auto;height:35px;padding-left:3px;line-height:35px;display:block;font-size:14px;cursor:auto;margin-bottom:2px;border-bottom:2px solid #ddd;margin-top:8px;}
+	.title_first{clear:both;text-align:left;float:left;font-weight:bold;}
+	.order_val{display:block;float:left;margin-left:5px;}
+	.order_box{border-bottom:2px solid #ddd;border-top:2px solid #ddd;}
+	.order_overflow{margin-top:10px;}
+	.add_property{height:55px;line-height:55px;}
+	.new_property{width:520px;height:510px;position:absolute;margin-left:-320px;margin-top:-270px;left:50%;top:50%;background:white;border-top:2px solid #f60;z-index:10;display:none;overflow-y:auto;}
+	/*****************Add AD*****************/
+	.add_AD{width:460px;height:460px;overflow-y:auto;}
+	.push_addr{width:auto;height:25px;border:1px solid #ddd;}
+	.modify_sorts{position:absolute;margin-left:-240px;margin-top:-244px;left:50%;top:50%;background:white;min-width:380px;min-height:350px;border-top:2px solid #f60;z-index:10;display:none;}
+	.statistics_line{display:block;float:left;line-height:56px;margin-left:10px;}
+	.vip_sets input{width:110px;height:25px;line-height:25px;border:1px solid #ddd;float:left;margin-top:15px;margin-left:10px;text-indent:0.5em;}
+	/*****************Role Manage******************/
+	.role_add{border:1px solid #ddd;color:#f60;display:block;float:left;height:25px;line-height:25px;margin-left:15px;margin-top:15px;width:60px;}
+	.role_add img{margin-top:7px;margin-right:3px;}
+	.role_name_td{width:240px;}.role_ope_td{width:180px;}
+	.role_txt{width:320px;height:53px;text-indent:0.8em;font-size:12px;border:1px solid #ddd;}
+	.role_row{height:60px;line-height:18px;margin:10px auto 0;padding-left:18px;color:#666;}
+	.role_box{width:320px;height:250px;border:1px solid #ddd;float:left;}
+	.role_box div{width:320px;clear:both;margin-bottom:5px;height:50px;}
+	.add_role{background:white none repeat scroll 0 0;border-top: 2px solid #f60;display:none;left:50%;margin-left:-240px;margin-top:-244px;height:480px;width:450px;position:absolute;top:50%;z-index:10;}
+	.role_goods{margin-left:5px;margin-top:5px;float:left;margin-right:3px;}
+	.role_span{font-size:14px;font-weight:bold;display:block;line-height:22px;}
+	.sub_role_goods{margin-left:20px;margin-top:5px;float:left;margin-right:3px;}
+	.sub_role_span{font-size:12px;margin-left:2px;display:block;float:left;line-height:24px;margin-right:0px;}
+	.sub_role_p{display:block;width:320px;height:25px;}
+	.modify_role{background:white none repeat scroll 0 0;border-top: 2px solid #f60;display:none;left:50%;margin-left:-240px;margin-top:-244px;height:480px;width:450px;position:absolute;top:50%;z-index:10;}
+	/***************************
+	****************************
+	****页面公用删除或上下架提示框****
+	****************************
+	****************************/
+	.top_mask{margin:0;padding:0;border:none;width:100%;height:100%;background:#444;opacity:0.6;filter:alpha(opacity=60);z-index:99;position:fixed;top:0;left:0;display:none;}
+	.deleted_tipsBox{background:white none repeat scroll 0 0;border-top: 2px solid #f60;display:none;left:50%;margin-left:-180px;margin-top:-140px;height:160px;width:260px;position:absolute;top:50%;z-index:100;}
+	.shelves_tipsBox{background:white none repeat scroll 0 0;border-top: 2px solid #f60;display:none;left:50%;margin-left:-180px;margin-top:-140px;height:160px;width:260px;position:absolute;top:50%;z-index:100;}
+	.confirm_del{width:100%;height:30px;color:#333;font-size:12px;margin-top:30px;text-align:center;}
+	.resetPwd_tipsBox{background:white none repeat scroll 0 0;border-top: 2px solid #f60;display:none;left:50%;margin-left:-180px;margin-top:-140px;height:230px;width:320px;position:absolute;top:50%;z-index:100;}
+	/********Reset PWD*******/
+	.setPwd{width:100%;height:30px;line-height:28px;margin-top:30px;}
+	.setPwd_span{clear:both;width:75px;display:block;float:left;text-align:right;font-size:12px;margin-left:10px;}
+	.setPwd_input{width:200px;height:25px;float:left;text-indent:0.5em;font-size:12px;border:1px solid #ddd;}
+	/**********Top Bar Modify PWD**********/
+	.modifyPwd_tipsBox{background:white none repeat scroll 0 0;border-top: 2px solid #f60;display:none;left:50%;margin-left:-120px;margin-top:-140px;height:285px;width:320px;position:absolute;top:50%;z-index:100;}
+	/***************App icon upload**************/
+	.app_sort_icon{width:100%;height:75px;margin-top:20px;}
+	.sort_icon_span{clear:both;color:#666;width:80px;height:35px;line-height:23px;font-size:13px;display:block;float:left;text-align:right;margin-left:18px;}
+	.upload_icon{width:100%;height:110px;}
+	.app_photos{width:65px;height:65px;display:block;float:left;margin-left:2px;margin-top:0px;border:2px solid #ddd;background-color:#fff;text-align:center;}
+	.app_photos img{width:65px;height:65px;}
+	.icon_file_upload{opacity:0;filter:alpha(opacity=0);z-index:10;float:left;width:66px;height:68px;cursor:pointer;position:relative;margin-left:-66px;}
+	
+	/**********
+	*******后台系统input输入框提示信息
+	**********/
+	.goods_list_tips{width:115px;height:25px;text-align:left;font-size:13px;top:16px;left:18px;line-height:25px;float:left;position:absolute;}
+	.goods_name_tips{width:115px;height:25px;text-align:left;font-size:13px;top:16px;left:152px;line-height:25px;float:left;position:absolute;}
+	.customs_name_tips{width:115px;height:25px;text-align:left;font-size:13px;top:16px;left:286px;line-height:25px;float:left;position:absolute;}
+	.search_select_tips{width:auto;height:25px;text-align:left;font-size:13px;top:16px;left:14px;line-height:25px;float:left;position:relative;color:#666;}
+	.usrName{width:115px;height:25px;text-align:left;font-size:13px;top:16px;left:152px;line-height:25px;float:left;position:absolute;}
+	.storeName{width:115px;height:25px;text-align:left;font-size:13px;top:16px;left:286px;line-height:25px;float:left;position:absolute;}
+	.contactName{width:115px;height:25px;text-align:left;font-size:13px;top:16px;left:420px;line-height:25px;float:left;position:absolute;}
+	.for_vip_name{width:115px;height:25px;text-align:left;font-size:13px;top:16px;left:554px;line-height:25px;float:left;position:absolute;}
+	.goods_order_name{width:115px;height:25px;text-align:left;font-size:13px;top:16px;left:688px;line-height:25px;float:left;position:absolute;}
+	.timeArea{width:auto;height:25px;text-align:left;font-size:13px;top:16px;left:6px;line-height:25px;float:left;position:relative;}
+	.goods_name_tips_end{width:115px;height:25px;text-align:left;font-size:13px;top:16px;left:300px;line-height:25px;float:left;position:absolute;}
+	/***********For VIP Manage Top Search***********/
+	.goods_list_tips1{width:105px;height:25px;text-align:left;font-size:13px;top:16px;left:16px;line-height:25px;float:left;position:absolute;}
+	.goods_name_tips1{width:105px;height:25px;text-align:left;font-size:13px;top:16px;left:138px;line-height:25px;float:left;position:absolute;}
+	.customs_name_tips1{width:105px;height:25px;text-align:left;font-size:13px;top:16px;left:260px;line-height:25px;float:left;position:absolute;}
+	.contactName1{width:105px;height:25px;text-align:left;font-size:13px;top:16px;left:382px;line-height:25px;float:left;position:absolute;}
+	.for_vip_name1{width:105px;height:25px;text-align:left;font-size:13px;top:16px;left:504px;line-height:25px;float:left;position:absolute;}
+	.registe_startTime{width:105px;height:25px;text-align:left;font-size:13px;top:16px;left:626px;line-height:25px;float:left;position:absolute;}
+	.registe_endTime{width:105px;height:25px;text-align:left;font-size:13px;top:16px;left:763px;line-height:25px;float:left;position:absolute;}
+	/************For Order Statistics*************/
+	.order_stat_start_tips{width:115px;height:25px;text-align:left;font-size:13px;top:16px;left:98px;line-height:25px;float:left;position:absolute;}
+	.order_stat_end_tips{width:115px;height:25px;text-align:left;font-size:13px;top:16px;left:245px;line-height:25px;float:left;position:absolute;}
+	.name_for_customs{width:115px;height:25px;text-align:left;font-size:13px;top:16px;left:379px;line-height:25px;float:left;position:absolute;}
+	/************Index Welcome Style**************/
+	.sys_message_in{width:100%;height:170px;border-bottom:2px solid #ddd;}
+	.pro_welcome{font-size:32px;margin-top:11%;left:22%;}
+	.comming_tips{clear:both;position:relative;width:800px;height:140px;border:1px solid #fc9;top:14px;margin:0 auto;background-color:#FFFDEE;}
+	.comming_tips p{font-size:12px;color:#666;float:left;line-height:68px;}
+	.pro_name{margin-left:50px;}
+	.last_loginTime{color:#f60;}
+	.message_in{clear:both;width:700px;height:40px;background-color:#fff;margin:0 auto;border:1px solid #ededed;}
+	.message_in a{line-height:40px;margin-left:30px;margin-right:30px;float:left;font-size:12px;}
+	.message_in a:hover{color:#f60;text-decoration:underline;}
+	.message_in a img{padding-top:11px;width:15px;height:15px;margin-right:5px;}
+	.message_in a span{color:#f60;}
+	/************Business Center Msg Alert*************/
+	.bcSysMsg{width:200px;background:white;border-top: 2px solid #f60;right:-205px;bottom:-2px;display:none;height:110px;position:absolute;border-left:1px solid #cdcdcd;border-bottom:1px solid #cdcdcd;z-index:1000;}
+	.Msg_rt_tips{background:#f7f7f7;padding:0px 10px;line-height:30px;height:30px;color:#555;font-size:12px;text-align:left;}
+	.Msg_alert_circle{padding-top:7px;margin-right:5px;width:14px;}
+	.Msg_alert_line{padding-top:8px;margin-right:10px;}
+	.Msg_close_btn{font-size:25px;font-weight:10;color:#999;text-decoration:none;float:right;padding-right:5px;line-height:30px;}
+	.Msg_content{line-height:70px;font-size:12px;color:#888;}
+	.Msg_close_btn:hover{color:#000;}
+	/*****************关闭删除图片图标******************/
+	.close_icon_img{cursor:pointer;position:relative;width:18px;height:18px;background-color:#999;border-radius:18px;overflow:hidden;display:block;float:left;margin-left:70px;margin-top:-88px;}
+	.close_icon_img img{width:100%;}
+	/********************库存为0******************/
+	.goods_inventory_part{width:auto;float:left;height:35px;margin-top:10px;margin-right:40px;margin-left:10px;}
+	.goods_inventory_part .goods_inventory{width:18px;height:18px;margin-top:8px;}
+	.goods_inventory_part .goods_inventory_txt{width:auto;float:left;height:35px;line-height:35px;}
+	/******************商品分类添加一二级名称********************/
+	.firstSecMenu{float:left;margin-top:9px;}
+	.firstMenuName{float:left;margin-left:15px;}
+	.secondNameSelect{float:left;margin-top:9px;}
+	.firstNameInput{display:none;width:95px ! important;}
+	.secondSortName{display:none;}
+	
+	/****
+	 **系统消息推送（2015.12.07）
+	 ****/
+	.msg_tab_select{height:30px;}
+	.tab_names a.tab_select{border-top: 2px solid #f60;background-color:#fff;}
+	.tab_select1,.tab_select2{float:left;background-color: #f5f5f5;border-left: px solid #ddd;border-right: 1px solid #ddd;border-top: 1px solid #ddd;color: #666;display: block;height: 30px;line-height: 30px;position: relative;text-align: center;width: 100px;}
+	.tab_select2{background-color: #f5f5f5;border-left: 0px solid #ddd;border-right: 1px solid #ddd;border-top: 1px solid #ddd;color: #666;display: block;height: 30px;line-height: 30px;position: relative;text-align: center;width: 100px;}
+	.msg_content_detail{display:block;background-color: #fff;border-left: 1px solid #ddd;padding-top:20px;border-right: 1px solid #ddd;clear: both;height: 95%;margin: 1px auto 0;position: relative;width: 101%;}
+	.msg_choice_table{clear: both;font-size: 12px;height: auto;margin: 0 auto;width: 95%;}
+	.msg_choice_table td span{margin-right:10px;}
+	.msg_choice_table td{text-align:left;}
+	.choice_area_btn:hover{color:#f60;text-decoration:underline;font-size:14px;}
+	.msg_choice_table td.left_width{width:100px;text-align:right;padding-right:10px;}
+	.w350_h150{width:350px;height:150px;border:1px solid #ddd;text-indent:0.5em;}
+	.input_tit{width:200px;height:23px;text-indent:0.5em;}
+	.submit_back_btn{width:300px;height:30px;margin-left:145px;margin-top:30px;}
+	.submit_back_btn a{width:90px;height:30px;display:inline-block;margin-right:10px;color:#fff;line-height:30px;}
+	.release_msgBtn{background-color:#f60;float: left;}
+	.back_msgBtn{background-color:#aaa;}
+	
+	.hight_mask{display:none;width:100%;height:100%;position:fixed;top:0;left:0;background: #000;opacity:0.3;filter:alpha(opacity=30);z-index:100;}
+	.hiclose_btn {color: #999;float: right;font-size: 25px;line-height: 40px;padding-right: 5px;text-decoration: none;}
+	
+	/************OverflowHidden************/
+	.wrap_container{width:100%;height:300px;overflow-y:auto;}
+	/****内容发布****/
+	.goods_table td img{width:160px;height:80px;}
+	/*添加轮播图*/
+	.add_slide_img{display:none;position:fixed;width:100%;height:100%;top:0;left:0;background:rgba(0,0,0,.3);z-index:10;}
+	.img_infos{width:500px;height:400px;position:absolute;top:0;left:0;right:0;bottom:0;margin:auto;background:#fff;overflow:hidden;}
+	.slide_img_table{width:92%;margin:10px auto 0;}
+	input{border-radius:5px;}
+	table input{text-indent:.5em;}
+	.w200h28{width:200px;height:28px;border:1px solid #ddd;line-height:28px;}
+	.w300h28{width:300px;height:28px;border:1px solid #ddd;}
+	.file_upload{width:50px;height:28px;opacity:0;margin-left:-55px;}
+	.slide_img_table td img{width:140px;height:60px;border:1px solid #eee;}
+	.choose_img{display:inline-block;width:50px;height:28px;border-radius:5px;background-color:#f60;text-align:center;line-height:28px;color:#fff;margin:15px 0 0 5px;}
+	.txtarea{width:360px;height:65px;border:1px solid #ddd;border-radius:5px;padding:5px;resize:none;}
+	/*确定，取消按钮*/
+	.btn_group{padding:15px 15px;position:absolute;bottom:0;right:0;}
+	.btn_group a{display:inline-block;width:70px;height:30px;text-align:center;line-height:30px;color:#fff;font-size:12px;border-radius:5px;}
+	.confirm_btn{background:#f60;margin-right:15px}
+	.cancle_btn{background:#ccc;}
+	
+	/****发布资讯／文章****/
+	.infos_box{padding-top:50px;}
+	.add_news_table{width:95%;margin:0 auto;}
+	.add_news_table{text-align:left;}
+	.news_td{width:100px;min-height:50px;}
+	.txt_container{width:100%;height:360px;}
+	.txt_container textarea{width:676px;height:360px;visibility:hidden;}
+	.submit_btn{width:80px;height:30px;border:none;border-radius:5px;color:#fff;background-color:#f60;float:left;margin:30px 0 30px 128px;}
+	
+	.modify_user{display:none;}
+	
+	/****权限管理****/
+	.focus_selected{position:relative;}
+	.first_level{display:inline-block;float:left;width:20px;height:17px;background:url(../images/menu_icon.png) no-repeat left center / contain;}
+	.second_level{display:inline-block;float:left;width:20px;height:17px;background:url(../images/sub_menu_icon.png) no-repeat left center / contain;margin-left:10px;}
+	.clean_input i{display:inline-block;position:absolute;top:17px;width:15px;height:15px;background:url(../images/error_tips.png) no-repeat left center / contain;margin-left:10px;}
+	.dom_box{display:none;position:absolute;left:0;top:40px;width:200px;height:145px;background-color:#fff;border:1px solid #ddd;box-shadow:1px 1px 3px 1px #e9e9e9;-webkit-box-shadow:1px 1px 3px 1px #e9e9e9;-moz-box-shadow:1px 1px 3px 1px #e9e9e9;border-radius:5px;overflow-y:auto;overflow-x:hidden;}
+	.dom_lists{overflow:hidden;padding:3px 0;}
+	.dom_lists li{width:100%;height:30px;line-height:30px;padding-left:30px;box-sizing:border-box;background:url(../images/menu_icon.png) no-repeat 6px center / 8%;font-size:12px;cursor:pointer;}
+	.dom_lists li:hover{background-color:#f1f1f1;}
+	
+	
+	.info_add{border:1px solid #ddd;color:#f60;display:block;float:left;height:25px;line-height:25px;margin-left:15px;margin-top:15px;width:60px;}
+	.info_add img{margin-top:7px;margin-right:3px;}
+	
+	
+	

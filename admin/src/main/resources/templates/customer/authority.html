@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8" />
+<title>资源管理</title>
+<head th:include="tag::tag" />
+<link type="text/css" rel="stylesheet" th:href="@{/css/TreeGrid.css}"/>
+<script type="text/javascript" th:src="@{/js/layer/layer.js}"></script>
+
+<script type="text/javascript" th:src="@{/js/common/TreeGrid.js}"></script>
+<script type="text/javascript" th:src="@{/js/customer/authority.js}"></script>
+
+</head>
+<body>
+	<div>
+	<!-- <div class="breadcrumbs" id="breadcrumbs">
+			<ul class="breadcrumb">
+				<li><i class="ace-icon fa fa-home home-icon"></i> <a href="/">首页</a></li>
+				<li><a th:href="@{/authority/}">权限</a></li>
+			</ul>
+		</div> -->
+		<div class="page-header">&nbsp;</div>
+		
+	<input type="hidden" id="editAuth" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_CUSTOMER')" value="true"/>
+
+		<div class="left-10 de-size-wrapper" id="searchDiv">
+			<div class="profile-info-value searchTr">
+				<label>权限名称：</label>
+					<input type="text" placeholder="" class="propertyValue1" /> <input
+						type="hidden" value="name" class="propertyName" /> <input
+						type="hidden" value="5" class="tempMatchType" /> <input
+						type="hidden" value="String" class="tempType" />
+					<!-- 3不等于 4等于 5包含 6小于 7大于  8小于等于  9大于等于  10之间  11IN查询 12NOT IN 13NULL 14NOT NULL -->
+			</div>
+
+			<div class="profile-info-value">
+					<button type="button" class="btn g-btn-primary" onclick="search();">
+						<i class="fa fa-search"></i> 搜索
+					</button>
+			</div>
+			<div class="profile-info-value">
+					<div>
+					<button type="button" class="btn btn-sm g-btn-primary margin-top-5"
+						name="openNode" onclick="expandAll(this)">
+						展开所有节点
+					</button>
+					</div>
+			</div>
+			<div class="profile-info-value">
+					<a sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_CUSTOMER')" href="javascript:void(-1)" onclick="openWin('/customerAuthority/add','添加资源');" class="btn g-btn-primary"><i class='ace-icon fa fa-plus white'></i>添加资源</a>
+			</div>
+		</div>
+		<div class="col-md-12" style="overflow-y: auto; overflow-x: auto">
+			<table id="authorityTable"
+				class="table table-striped table-bordered table-hover"></table>
+		</div>
+
+	</div>
+</body>
+</html>
