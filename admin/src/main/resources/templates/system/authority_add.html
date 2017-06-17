@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+<meta charset="UTF-8" />
+<title>添加权限</title>
+<head th:include="tag::tag" />
+<script type="text/javascript" th:src="@{/js/layer/layer.js}"></script>
+
+<script type="text/javascript" th:src="@{/js/system/authority_edit.js}" ></script>
+</head>
+<body>
+	<div>
+		<div class="page-header">&nbsp;</div>
+		
+		<div class="col-md-12">
+		<form method="post" th:action="@{/authority/add}" id="authorityForm">
+				<input type="hidden" id="id" name="id" />
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">添加权限</h3>
+						</div>
+						<table class="table table-bordered g-table g-table-form">
+							<tr>
+							<td class="col-sm-2">所属父类：</td>
+							<td>
+								<div class="col-xs-12 col-sm-8">
+									<span class="block input-icon input-icon-right"> 
+									<input type="text" readonly="readonly" class="width-40"
+										id="parentName" th:value="*{parentName}" onclick="showTree1()" /> 
+										<input type="hidden" id="parentId" name="parentId" th:value="*{parentId}" />
+										<span><a href="javascript:void(-1)" onclick="clearParentData()"
+											title="清除"><i class="ace-icon fa fa-times bigger-130 red"></i></a></span>
+									</span>
+								</div>
+							</td>
+						</tr>
+							<tr>
+								<td class="g-required">权限名称：</td>
+								<td>
+									<div class="col-md-3"><input type="text" name="name" id="name" class="form-control" /></div>
+								</td>
+							</tr>
+							<tr>
+								<td class="g-required">权限代码：</td>
+								<td>
+									<div class="col-md-3"><input type="text" name="code" id="code" class="form-control"  /></div>
+								</td>
+							</tr>
+							<tr>
+							    <td>排序：</td>
+								<td>
+									<div class="col-md-3">
+										<input type="text" name="sort" id="sort" class="form-control"  />
+									</div>
+								</td>
+							</tr>
+							<tr>
+							    <td>描述：</td>
+								<td>
+									<div class="col-md-5">
+										<span class="block input-icon input-icon-right">
+										<textarea rows="6" maxlength="200" class="width-95" name="details"></textarea>
+										</span>
+									</div>
+								</td>
+							</tr>
+							
+						</table>
+					</div>
+					<div class="row">
+						<div class="text-center col-md-4"><button class="btn g-btn-primary" onclick="submitForm();" type="button" data-last="Finish">提交</button></div>
+					</div>
+				</form>
+
+		</div>
+	</div>
+	<div class="zTreeDemoBackground" id="zTreeDemoBackground"
+		style="display: none; position: absolute; height: 200px; min-width: 150px; background-color: white; border: 1px solid; z-index: 99999; overflow-y: auto; overflow-x: auto;">
+		<ul id="treeDemo" class="ztree"
+			style="font-size: 13px; font-weight: bold;"></ul>
+
+	</div>
+</body>
+</html>

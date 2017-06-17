@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8" />
+<title>storeVip</title>
+<head th:include="tag::tag" />
+<script type="text/javascript" th:src="@{/js/system/storeVip.js}"></script>
+</head>
+<body>
+<div class="page-header">&nbsp;</div>
+<div class="left-10 de-size-wrapper" id="searchDiv">
+    <div class="profile-info-value searchTr">
+				<label>手机号：</label>
+					<input type="text" placeholder="" class="propertyValue1" /> <input
+						type="hidden" value="mobile" class="propertyName" /> <input
+						type="hidden" value="5" class="tempMatchType" /> <input
+						type="hidden" value="String" class="tempType" />
+			</div>
+        <div class="profile-info-value searchTr">
+				<label>姓名：</label>
+					<input type="text" placeholder="" class="propertyValue1" /> <input
+						type="hidden" value="name" class="propertyName" /> <input
+						type="hidden" value="5" class="tempMatchType" /> <input
+						type="hidden" value="String" class="tempType" />
+			</div>
+			<div class="profile-info-value searchTr">
+				<label>关联店铺：</label>
+					<input type="text" placeholder="" class="propertyValue1" /> <input
+						type="hidden" value="store.name" class="propertyName" /> <input
+						type="hidden" value="5" class="tempMatchType" /> <input
+						type="hidden" value="String" class="tempType" />
+			</div>
+    <div class="profile-info-value">
+					<button type="button" class="btn g-btn-primary" onclick="search();">
+						<i class="fa fa-search"></i> 搜索
+					</button>
+			</div>
+</div>
+<div class="col-md-12" style="overflow-y: auto; overflow-x: auto">
+    <table id="storeVipTable" class="table table-striped table-bordered table-hover"></table>
+</div>
