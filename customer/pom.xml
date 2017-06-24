@@ -6,14 +6,14 @@
 	<name>customer</name>
 	<description>168客户端</description>
 	<parent>
-		<groupId>168zx.com</groupId>
+		<groupId>66game.cn</groupId>
 		<artifactId>parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 	<dependencies>
 		<dependency>
-			<groupId>168zx.com</groupId>
+			<groupId>66game.cn</groupId>
 			<artifactId>core</artifactId>
 			<version>${project.version}</version>
 		</dependency>

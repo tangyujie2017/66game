@@ -6,7 +6,7 @@
 	<packaging>jar</packaging>
 	<description>核心公共</description>
 	<parent>
-		<groupId>168zx.com</groupId>
+		<groupId>66game.cn</groupId>
 		<artifactId>parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
