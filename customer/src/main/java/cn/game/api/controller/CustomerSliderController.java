@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.game.api.service.SliderService;
-import cn.tz.www.customer.entity.tools.JsonObj;
+import cn.game.core.tools.JsonObj;
 
 @Controller
 public class CustomerSliderController {

@@ -7,9 +7,9 @@
   <description>顶级父类</description>
   <packaging>pom</packaging>
   <modules>
-   <module>../customer</module>
-   <module>../core</module>
-   <module>../admin</module>
+   <module>../gameApi</module>
+   <module>../gameCore</module>
+   <module>../gameAdmin</module>
   </modules>
   <parent>
 		<groupId>org.springframework.boot</groupId>

@@ -16,11 +16,11 @@ import org.springframework.stereotype.Service;
 import cn.game.api.contorller.view.CustomerResource;
 import cn.game.api.contorller.view.Resource;
 import cn.game.api.service.CustomerUserService;
-import cn.tz.www.customer.entity.repository.customer.CustomerRepository;
-import cn.tz.www.customer.entity.repository.customerRole.CustomerRoleRepository;
-import cn.tz.www.customer.entity.table.Customer;
-import cn.tz.www.customer.entity.tools.Groups;
-import cn.tz.www.customer.entity.tools.JsonObj;
+import cn.game.core.repository.customer.CustomerRepository;
+import cn.game.core.repository.customerRole.CustomerRoleRepository;
+import cn.game.core.table.Customer;
+import cn.game.core.tools.Groups;
+import cn.game.core.tools.JsonObj;
 
 @Service
 public class CustomerUserServiceImpl implements CustomerUserService {

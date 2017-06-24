@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 
 import cn.game.api.contorller.view.NewsVo;
 import cn.game.api.service.NewsService;
-import cn.tz.www.customer.entity.repository.news.NewsRepository;
-import cn.tz.www.customer.entity.table.News;
-import cn.tz.www.customer.entity.tools.Groups;
-import cn.tz.www.customer.entity.tools.Page;
+import cn.game.core.repository.news.NewsRepository;
+import cn.game.core.table.News;
+import cn.game.core.tools.Groups;
+import cn.game.core.tools.Page;
 @Service
 public class NewsServiceImpl implements NewsService {
 	@Autowired

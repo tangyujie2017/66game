@@ -19,7 +19,7 @@ import cn.game.api.contorller.view.CustomerVo;
 import cn.game.api.contorller.view.Resource;
 import cn.game.api.controller.req.LoginReq;
 import cn.game.api.service.CustomerUserService;
-import cn.tz.www.customer.entity.tools.JsonObj;
+import cn.game.core.tools.JsonObj;
 
 @Controller
 public class CustomerUserController {

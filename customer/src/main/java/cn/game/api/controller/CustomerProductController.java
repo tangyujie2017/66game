@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.game.api.service.ProductService;
-import cn.tz.www.customer.entity.table.Product;
-import cn.tz.www.customer.entity.tools.Groups;
-import cn.tz.www.customer.entity.tools.JsonObj;
-import cn.tz.www.customer.entity.tools.Page;
+import cn.game.core.table.Product;
+import cn.game.core.tools.Groups;
+import cn.game.core.tools.JsonObj;
+import cn.game.core.tools.Page;
 
 @Controller
 public class CustomerProductController {

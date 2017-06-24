@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
-import cn.tz.www.customer.Core;
+import cn.game.core.Core;
 @Import(Core.class)
 @SpringBootApplication
 

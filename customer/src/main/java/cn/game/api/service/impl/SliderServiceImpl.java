@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 
 import cn.game.api.contorller.view.SliderVo;
 import cn.game.api.service.SliderService;
-import cn.tz.www.customer.entity.repository.slide.SlideRepository;
-import cn.tz.www.customer.entity.table.Slide;
-import cn.tz.www.customer.entity.tools.Groups;
+import cn.game.core.repository.slide.SlideRepository;
+import cn.game.core.table.Slide;
+import cn.game.core.tools.Groups;
 
 @Service
 public class SliderServiceImpl implements SliderService {

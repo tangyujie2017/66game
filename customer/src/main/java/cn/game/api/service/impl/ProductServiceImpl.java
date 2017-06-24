@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 
 import cn.game.api.contorller.view.ProductVo;
 import cn.game.api.service.ProductService;
-import cn.tz.www.customer.entity.repository.product.ProductRepository;
-import cn.tz.www.customer.entity.table.Product;
-import cn.tz.www.customer.entity.tools.Groups;
-import cn.tz.www.customer.entity.tools.Page;
+import cn.game.core.repository.product.ProductRepository;
+import cn.game.core.table.Product;
+import cn.game.core.tools.Groups;
+import cn.game.core.tools.Page;
 @Service
 public class ProductServiceImpl implements ProductService {
 
