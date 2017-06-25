@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Import;
 import cn.game.core.Core;
 @Import(Core.class)
 @SpringBootApplication
-
+//游戏接口启动类
 public class GameApiApplication {
 
 	public static void main(String[] args) {

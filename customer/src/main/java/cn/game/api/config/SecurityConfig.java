@@ -12,23 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.*;
-
-
-/**
- *
- */
-
 @EnableWebSecurity
 public class SecurityConfig {
-  
-  
-
- 
-/**
- * 
- * 接口Url请求过滤定义
- * 
- * */
   @Configuration
   @Order(1)
   public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -51,7 +36,7 @@ public class SecurityConfig {
           .antMatchers("/api/customer/vip/*").hasAnyRole("VIP")
          
       ;
-      ;
+    
     }
 
     @Bean
