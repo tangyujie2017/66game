@@ -1,15 +1,10 @@
-package cn.game.core.repository.customerRole;
+package cn.game.core.repository.system;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import cn.game.core.table.CustomerRole;
-import cn.game.core.table.Role;
+import cn.game.core.entity.table.system.CustomerRole;
 
-
-/**
- * Created by zzc on 16/11/2016.
- */
 @Repository
 public interface CustomerRoleRepository extends CrudRepository<CustomerRole, Long> {
 	CustomerRole findByName(String name);

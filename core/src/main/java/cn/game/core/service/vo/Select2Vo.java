@@ -1,16 +1,16 @@
-package cn.game.core.service;
+package cn.game.core.service.vo;
 
-public class Select2NameVo {
+public class Select2Vo {
 	
-	private String id;
+	private Long id;
 	
 	private String text;
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
