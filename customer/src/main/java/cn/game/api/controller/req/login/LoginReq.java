@@ -1,4 +1,4 @@
-package cn.game.api.controller.req;
+package cn.game.api.controller.req.login;
 
 public class LoginReq {
 private String login;
