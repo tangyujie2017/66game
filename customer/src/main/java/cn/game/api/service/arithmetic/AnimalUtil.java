@@ -150,16 +150,21 @@ public class AnimalUtil {
 		Integer toatalScore = 0;
 		Integer toplayer = 0;
 		for (String key : dataIn.keySet()) {
+			//计算总收入
 			toatalScore += dataIn.get(key).getIncome();
-			if (toplayer == 0) {
-				toplayer = dataIn.get(key).getTotal();
-			}else{
-				System.out.println("赔率"+dataIn.get(key).getTotal());
-				if(toplayer>dataIn.get(key).getTotal()){
-					
-					toplayer=dataIn.get(key).getTotal();
+			//找支出
+			if(dataIn.get(key).getAnimalId()!=10l&&dataIn.get(key).getAnimalId()!=11l){
+				if (toplayer == 0) {
+					toplayer = dataIn.get(key).getTotal();
+				}else{
+					System.out.println("赔率"+dataIn.get(key).getTotal());
+					if(toplayer>dataIn.get(key).getTotal()){
+						
+						toplayer=dataIn.get(key).getTotal();
+					}
 				}
 			}
+			
 		}
       System.out.println("此局共压分："+toatalScore+"赔率为："+toplayer);
 	}
