@@ -30,7 +30,7 @@ public class Test {
 		Animal peacock = new Animal(3l, "孔雀", 10 * createRandom(), 12, "peacock");
 		Animal eagle = new Animal(4l, "老鹰", 10 * createRandom(), 24, "eagle");
 
-		// 走兽类
+//		// 走兽类
 		Animal rabbit = new Animal(5l, "兔子", 10 * createRandom(), 4, "rabbit");
 		Animal monkey = new Animal(6l, "猴子", 10 * createRandom(), 8, "monkey");
 		Animal panda = new Animal(7l, "熊猫", 10 * createRandom(), 12, "panda");
@@ -62,8 +62,8 @@ public class Test {
 	}
 
 	private static int createRandom() {
-		int max = 20;
-		int min = 1;
+		int max = 2000;
+		int min = 0;
 		Random random = new Random();
 
 		int s = random.nextInt(max) % (max - min + 1) + min;

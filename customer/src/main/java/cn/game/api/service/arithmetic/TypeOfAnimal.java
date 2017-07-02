@@ -5,7 +5,7 @@ import java.util.List;
 
 public class TypeOfAnimal {
 	private Long animalId;
-	private List<UserAnimal> uGoodsList =new ArrayList<UserAnimal>();
+	private List<UserAnimal> userAnimalList =new ArrayList<UserAnimal>();
 	private Integer total=0;
 	private Integer income=0;
 	
@@ -15,13 +15,14 @@ public class TypeOfAnimal {
 	public void setAnimalId(Long animalId) {
 		this.animalId = animalId;
 	}
-	public List<UserAnimal> getuGoodsList() {
-		return uGoodsList;
-	}
-	public void setuGoodsList(List<UserAnimal> uGoodsList) {
-		this.uGoodsList = uGoodsList;
-	}
 	
+	
+	public List<UserAnimal> getUserAnimalList() {
+		return userAnimalList;
+	}
+	public void setUserAnimalList(List<UserAnimal> userAnimalList) {
+		this.userAnimalList = userAnimalList;
+	}
 	public Integer getTotal() {
 		return total;
 	}
