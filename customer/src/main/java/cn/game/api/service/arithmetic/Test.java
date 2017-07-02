@@ -9,11 +9,11 @@ public class Test {
 
 		try {
 			AnimalUtil.receiver("1231456", 1l, createAnimalList());
-			AnimalUtil.receiver("1231456", 2l, createAnimalList());
-			AnimalUtil.receiver("1231456", 3l, createAnimalList());
-			AnimalUtil.receiver("1231456", 4l, createAnimalList());
-
-			AnimalUtil.receiver("1231456", 5l, createAnimalList());
+//			AnimalUtil.receiver("1231456", 2l, createAnimalList());
+//			AnimalUtil.receiver("1231456", 3l, createAnimalList());
+//			AnimalUtil.receiver("1231456", 4l, createAnimalList());
+//
+//			AnimalUtil.receiver("1231456", 5l, createAnimalList());
 			
 			AnimalUtil.matcher("1231456");
 			

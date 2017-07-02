@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>gameApi</artifactId>
 	<name>gameApi</name>
-	<description>168客户端</description>
+	<description>66game客户端</description>
 	<parent>
 		<groupId>66game.cn</groupId>
 		<artifactId>parent</artifactId>
@@ -17,9 +17,16 @@
 			<artifactId>gameCore</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-       <dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+
+			<groupId>org.redisson</groupId>
+			<artifactId>redisson</artifactId>
+			<version>3.3.2</version>
+
 		</dependency>
 		<dependency>
 			<groupId>org.thymeleaf.extras</groupId>
@@ -27,7 +34,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-	     <finalName>customer-start</finalName>
+		<finalName>customer-start</finalName>
 		<defaultGoal>compile</defaultGoal>
 		<plugins>
 			<plugin>
