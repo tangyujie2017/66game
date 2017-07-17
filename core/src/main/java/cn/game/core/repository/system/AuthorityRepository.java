@@ -7,9 +7,7 @@ import cn.game.core.repository.system.custom.AuthorityRepositoryCustom;
 
 
 
-/**
- * Created by zzc on 11/11/2016.
- */
+
 @Repository
 public interface AuthorityRepository extends CrudRepository<Authority, Long>, AuthorityRepositoryCustom {
    

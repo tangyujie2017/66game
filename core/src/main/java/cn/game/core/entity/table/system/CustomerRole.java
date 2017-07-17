@@ -32,7 +32,7 @@ public class CustomerRole extends BaseEntity {
 	  private List<Customer> users;
 
 	  @ManyToMany(fetch = FetchType.EAGER)
-	  @JoinTable(name = "customer_role_customer_authority")
+	  @JoinTable(name = "customerrole_customerauthority")
 	  private List<CustomerAuthority> authoritys;
 
 	  public CustomerRole() {
