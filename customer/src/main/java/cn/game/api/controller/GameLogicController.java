@@ -18,11 +18,11 @@ import cn.game.api.controller.req.login.WXLoginReq;
 import cn.game.api.service.login.GameLoginService;
 import cn.game.core.entity.table.play.Player;
 
-@Controller
+@Controller(value="/api/v1/wx")
 public class GameLogicController {
 	@Autowired
 	private GameLoginService gameLoginService;
-	@PostMapping(name="/api/v1/wx/wxLogin")
+	@PostMapping(value="/wxLogin")
 	@ResponseBody
 	public ResponseEntity<BaseResponse> wxLogin(@ Valid @RequestBody BaseRequest<WXLoginReq> req,BindingResult result){
 		if (result.hasErrors()) {
@@ -53,7 +53,7 @@ public class GameLogicController {
 		
 		
 	}
-	@PostMapping(name="/api/v1/wx/refresh ")
+	@PostMapping(value="/refresh ")
 	@ResponseBody
 	public ResponseEntity<BaseResponse> wxRefresh (@ Valid @RequestBody BaseRequest<WXLoginReq> req,BindingResult result){
 		if (result.hasErrors()) {
