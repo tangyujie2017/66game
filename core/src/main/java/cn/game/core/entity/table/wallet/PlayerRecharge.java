@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
 import cn.game.core.entity.table.play.Player;
 
 //用户充值相关
-@Entity(name = "player_wallet")
+@Entity(name = "player_recharge")
 public class PlayerRecharge implements Serializable{
 
 	/**
