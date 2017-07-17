@@ -33,9 +33,7 @@ public class SecurityConfig {
           //公共资源不需要认证
           .antMatchers("/api/customer/public/*").permitAll()
           .antMatchers("/api/customer/*").authenticated()
-          .antMatchers("/api/customer/vip/*").hasAnyRole("VIP")
-         
-      ;
+          .antMatchers("/api/customer/vip/*").hasAnyRole("VIP");
     
     }
 
