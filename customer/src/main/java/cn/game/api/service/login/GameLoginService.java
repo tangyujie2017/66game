@@ -1,10 +1,10 @@
 package cn.game.api.service.login;
 
+import cn.game.core.entity.table.play.Player;
+
 public interface GameLoginService {
-	public Object login(String userName,String userPwd);
-	public Object login(Long userid);
-	public Object userRegist(String userName,String userPwd);
-	public Object weChatLogin(String weChatId);
-	public Object  userLoginLog();
+	public Player  checkWxUser(String wxUnionid);
+	public Player  saveWxUser(Player player);
+	public Player  updateWxUser(Player player);
 
 }
