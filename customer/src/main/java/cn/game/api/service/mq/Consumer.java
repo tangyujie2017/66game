@@ -5,8 +5,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Consumer {
-	 @JmsListener(destination = "sample.queue")
-	    public void receiveQueue(String text) {
+	@JmsListener(destination = "portal.admin.queue",containerFactory = "jmsListenerContainerQueue") // 监听指定消息主题
+	    public void receiveQueue(Email text) {
 	       System.out.println(text);
 	    }
 }
