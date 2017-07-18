@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.validation.Valid;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -11,7 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import cn.game.api.controller.req.BaseRequest;
 import cn.game.api.controller.req.BaseResponse;
 import cn.game.api.controller.req.login.WXLoginReq;
@@ -20,7 +20,7 @@ import cn.game.core.entity.table.play.Player;
 
 @Controller(value="/api/v1/wx")
 public class GameLoginController {
-
+	private static Logger logger = Logger.getLogger(GameLoginController.class);
 	@Autowired
 	private GameLoginService gameLoginService;
 	

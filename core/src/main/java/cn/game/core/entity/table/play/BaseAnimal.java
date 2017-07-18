@@ -68,6 +68,9 @@ public class BaseAnimal implements Serializable{
 		this.type=type;
 	}
 
+	public BaseAnimal() {
+		super();
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;

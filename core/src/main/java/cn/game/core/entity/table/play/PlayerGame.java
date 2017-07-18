@@ -45,6 +45,54 @@ public class PlayerGame implements Serializable{
 	@JoinTable(name = "playegame_gameanimal")
 	private List<GameAnimal> animalList;
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
+	public String getBatchNum() {
+		return batchNum;
+	}
+
+	public void setBatchNum(String batchNum) {
+		this.batchNum = batchNum;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Long getTotalScore() {
+		return totalScore;
+	}
+
+	public void setTotalScore(Long totalScore) {
+		this.totalScore = totalScore;
+	}
+
+	public List<GameAnimal> getAnimalList() {
+		return animalList;
+	}
+
+	public void setAnimalList(List<GameAnimal> animalList) {
+		this.animalList = animalList;
+	}
+
 	
 
 }

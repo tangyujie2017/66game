@@ -25,9 +25,10 @@ public class GameAnimal implements Serializable{
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "animal_id")
 	private BaseAnimal animal;
+	//
 	@Column
 	private Integer score;
-	
+	//赔分
 	@Column(name="total_score")
 	private  Long totalScore;
 
@@ -53,6 +54,14 @@ public class GameAnimal implements Serializable{
 
 	public void setTotalScore(Long totalScore) {
 		this.totalScore = totalScore;
+	}
+
+	public BaseAnimal getAnimal() {
+		return animal;
+	}
+
+	public void setAnimal(BaseAnimal animal) {
+		this.animal = animal;
 	}
 	
 	

@@ -25,16 +25,16 @@ public class RedisRepository {
 		valOpsStr.set(key, value);
 	}
 
-	public void getString(String key) {
-		valOpsStr.get(key);
+	public String getString(String key) {
+		return valOpsStr.get(key);
 	}
 
 	public void saveObject(Object key, Object value) {
 		valOps.set(key, value);
 	}
 
-	public void getObject(Object key) {
-		valOps.get(key);
+	public Object getObject(Object key) {
+		return valOps.get(key);
 	}
 
 }
