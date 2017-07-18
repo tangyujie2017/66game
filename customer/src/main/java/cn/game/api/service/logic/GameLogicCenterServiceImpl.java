@@ -1,12 +1,7 @@
-package cn.game.api.service.impl.logic;
+package cn.game.api.service.logic;
 
-import cn.game.api.service.logic.GameLogicCenterService;
 import cn.game.core.tools.Page;
-/**
- * 游戏逻辑服务类
- * 
- * 
- * **/
+
 public class GameLogicCenterServiceImpl implements GameLogicCenterService{
 
 	@Override
