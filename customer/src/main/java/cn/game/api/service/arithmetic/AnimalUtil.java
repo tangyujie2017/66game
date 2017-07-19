@@ -2,6 +2,8 @@ package cn.game.api.service.arithmetic;
 
 import java.util.*;
 
+import javax.persistence.Column;
+
 import org.apache.log4j.Logger;
 
 import cn.game.api.GameApiApplication;
@@ -11,6 +13,9 @@ import cn.game.core.entity.table.play.BaseAnimal;
 import cn.game.core.entity.table.play.GameAnimal;
 import cn.game.core.entity.table.play.Player;
 import cn.game.core.entity.table.play.PlayerGame;
+import cn.game.core.entity.table.play.PlayerGameResult;
+import cn.game.core.entity.table.play.ResultAnimal;
+import cn.game.core.entity.table.play.UserGameResult;
 
 public class AnimalUtil {
 	private static Logger logger = Logger.getLogger(AnimalUtil.class);
@@ -21,7 +26,7 @@ public class AnimalUtil {
 		Map<Long, List<Animal>> map = new HashMap<Long, List<Animal>>();
 
 		Map<String, Map<Long, List<Animal>>> container = AnimalConstant.Data_Container;
-		if (container.get(batch)==null) {
+		if (container.get(batch) == null) {
 			logger.debug("设置游戏接收数据容器container[AnimalConstant.Data_Container]");
 			container.put(batch, map);
 		}
@@ -50,27 +55,27 @@ public class AnimalUtil {
 
 	}
 
-	public static void receiver(String batch, Long userId, List<Animal> list,GameLogicCenterService gameLogicCenterService) throws Exception {
+	public static void receiver(String batch, Long userId, List<Animal> list,
+			GameLogicCenterService gameLogicCenterService) throws Exception {
 		AnimalUtil.initBatch(batch);
 		AnimalUtil.initTypeOfAnimal();
 		// batch 怎么来？
 
 		logger.debug("用户userId：" + userId + " 买入游戏批次号batch：" + batch + " 买入详情：");
-		Long totalScore=0l;
-		List<GameAnimal> aList=new ArrayList<>();
+		Long totalScore = 0l;
+		List<GameAnimal> aList = new ArrayList<>();
 		for (Animal a : list) {
-			GameAnimal ga=new GameAnimal();
-			logger.debug(
-					"...动物[id_名字]：" + a.getId() + "_" + a.getName() + " 买入分数：" + a.getScore() + " 中奖赔偿分数[买入*赔率]" + "["
-							+ a.getScore() + "*" + a.getMultiple() + "]=" + a.getScore() * a.getMultiple());
-			
+			GameAnimal ga = new GameAnimal();
+			logger.debug("...动物[id_名字]：" + a.getId() + "_" + a.getName() + " 买入分数：" + a.getScore() + " 中奖赔偿分数[买入*赔率]"
+					+ "[" + a.getScore() + "*" + a.getMultiple() + "]=" + a.getScore() * a.getMultiple());
+
 			ga.setScore(a.getScore());
 			ga.setTotalScore((long) (a.getScore() * a.getMultiple()));
-			BaseAnimal animal =new BaseAnimal();
+			BaseAnimal animal = new BaseAnimal();
 			animal.setId(a.getId());
 			aList.add(ga);
 			ga.setAnimal(animal);
-			totalScore+=a.getScore();
+			totalScore += a.getScore();
 		}
 		if (batch != null && !batch.equals("") && userId != null && list != null && list.size() > 0) {
 			Map<String, Map<Long, List<Animal>>> container = AnimalConstant.Data_Container;
@@ -84,13 +89,13 @@ public class AnimalUtil {
 				} else {
 					logger.debug("用户userId：" + userId + "的数据加入数据容器[AnimalConstant.Data_Container]");
 					userMap.put(userId, list);
-					//保存用户购买数据进入数据库
-					PlayerGame playerGame=new PlayerGame();
+					// 保存用户购买数据进入数据库
+					PlayerGame playerGame = new PlayerGame();
 					playerGame.setBatchNum(batch);
 					playerGame.setCreateTime(new Date());
-					Player p=new Player();
+					Player p = new Player();
 					p.setUserId(userId);
-					playerGame.setPlayer(p );
+					playerGame.setPlayer(p);
 					playerGame.setTotalScore(totalScore);
 					playerGame.setAnimalList(aList);
 					gameLogicCenterService.savePalyData(playerGame);
@@ -109,7 +114,7 @@ public class AnimalUtil {
 	 * 定时器任务每隔一定时间开启一批次的游戏结果
 	 * 
 	 */
-	public static void matcher(String batch) {
+	public static void matcher(String batch, GameLogicCenterService gameLogicCenterService) {
 		logger.debug("开始进行匹配 匹配的批次号：" + batch);
 		Map<String, Map<Long, List<Animal>>> container = AnimalConstant.Data_Container;
 		if (batch != null && !batch.equals("")) {
@@ -127,7 +132,7 @@ public class AnimalUtil {
 				Map<String, TypeOfAnimal> result = sumTotal(userMap, userDate);
 
 				// 计算在内存中的总体值
-				playReslt(result);
+				playReslt(result, gameLogicCenterService, batch, userDate);
 			} else {
 				// 插入当前批次日志
 			}
@@ -152,12 +157,15 @@ public class AnimalUtil {
 
 			List<Animal> list = userMap.get(userid);
 			Map<Long, Animal> animalMap = new HashMap<>();
+			int inTotalScore = 0;
 			for (Animal animal : list) {
 				// 每一个用户商品map
-
+				inTotalScore += animal.getScore();
 				animalMap.put(animal.getId(), animal);
 
 			}
+			uGoods.setInTotalScore(inTotalScore);
+			uGoods.setOutTotalScore(0);// 此时不知道开奖无法计算出用户赔偿多少
 			uGoods.setAnimalMap(animalMap);
 			map.put(userid, uGoods);
 		}
@@ -166,6 +174,7 @@ public class AnimalUtil {
 
 	// 同一批次计算总和汇总
 	private static Map<String, TypeOfAnimal> sumTotal(Map<Long, List<Animal>> userMap, Map<Long, UserAnimal> userDate) {
+
 		Map<String, TypeOfAnimal> gameInitData = AnimalConstant.TypeOfAnimal;
 		if (gameInitData != null) {
 			Set<Long> userids = userMap.keySet();
@@ -193,12 +202,13 @@ public class AnimalUtil {
 		return gameInitData;
 	}
 
-	public static void playReslt(Map<String, TypeOfAnimal> dataIn) {
+	public static void playReslt(Map<String, TypeOfAnimal> dataIn, GameLogicCenterService gameLogicCenterService,
+			String batchNum, Map<Long, UserAnimal> userDate) {
 		// 只开一个
 		Integer toatalScore = 0;
 		Integer toplayerSum = 0;
 		String animalType = "";
-		Map<String, TypeOfAnimal> toplayer = new HashMap<>();
+
 		// 飞禽数据
 		Map<String, TypeOfAnimal> birds = new HashMap<>();
 		birds.put("birds", dataIn.get("birds"));
@@ -307,13 +317,17 @@ public class AnimalUtil {
 			resultType = animalType;
 			animalId = dataIn.get(animalType).getAnimalId();
 		}
+		// 获取开奖结果结束
+
 		logger.debug(
 				"此局购买飞禽的情况[买入_中奖后支出][" + birds.get("birds").getIncome() + "_" + birds.get("birds").getTotal() + "]");
 		logger.debug(
 				"此局购买走兽的情况[买入_中奖后支出][" + beast.get("beast").getIncome() + "_" + beast.get("beast").getTotal() + "]");
 		logger.debug(" 开奖结果Type：" + resultType + "   animalId：" + animalId);
-		// 开奖
+
+		// 获得本次开出的结果
 		TypeOfAnimal typeOfAnimal = dataIn.get(resultType);
+
 		if (typeOfAnimal.getAnimalId().equals(1l) || typeOfAnimal.getAnimalId().equals(2l)
 				|| typeOfAnimal.getAnimalId().equals(3l) || typeOfAnimal.getAnimalId().equals(4l)) {
 			// 飞禽
@@ -321,37 +335,114 @@ public class AnimalUtil {
 			logger.debug("...收入总分为：" + toatalScore + ",赔偿总分为[当前开奖动物_飞禽购买]：" + typeOfAnimal.getTotal() + "_"
 					+ birds.get("birds").getTotal() + "共计："
 					+ (typeOfAnimal.getTotal() + birds.get("birds").getTotal()));
-			// 获奖结果
+			// --------------
+			// 存储数据库
+
+			PlayerGameResult result = new PlayerGameResult();
+			BaseAnimal winner = new BaseAnimal();
+			// 设置开奖的动物
+			winner.setId(typeOfAnimal.getAnimalId());
+			result.setAnimal(winner);
+			result.setBatchNum(batchNum);
+			result.setCreateTime(new Date());
+			result.setIncomeTotalScore((long) toatalScore);
+			result.setOutTotalScore((long) typeOfAnimal.getTotal() + birds.get("birds").getTotal());
+			result.setResultTotalScore(
+					(long) (toatalScore - (typeOfAnimal.getTotal() + birds.get("birds").getTotal())));
+			if (toatalScore - (typeOfAnimal.getTotal() + birds.get("birds").getTotal()) > 0) {
+				result.setType(0);
+			} else {
+				result.setType(1);
+			}
+
+			// --------------
+			// 处理过的用户获奖情况
+
+			// 获奖结果(普通类)
 			logger.debug("获奖人名单如下：");
 			for (UserAnimal userAnimal : typeOfAnimal.getUserAnimalList()) {
 				logger.debug("获奖人id：" + userAnimal.getUserid());
+
 				for (Long aID : userAnimal.getAnimalMap().keySet()) {
+					Animal animal = userAnimal.getAnimalMap().get(aID);
 					if (typeOfAnimal.getAnimalId().equals(aID)) {
-						Animal animal = userAnimal.getAnimalMap().get(aID);
+
+						UserAnimal temp = userDate.get(userAnimal.getUserid());
+						// 设置当前用户赔偿
+						temp.setOutTotalScore(animal.getScore() * animal.getMultiple());
+
+						temp.getAnimalMap().get(aID).setSelected(true);
+
 						int toUserScore = animal.getScore() * animal.getMultiple();
-						logger.debug(" 赔偿积分：" + toUserScore+" ");
+						logger.debug(" 赔偿积分：" + toUserScore + " ");
 
 					}
 
 				}
 
 			}
-			
-			//飞禽类
-			TypeOfAnimal feiqin=birds.get("birds");
+			// 飞禽类
+			TypeOfAnimal feiqin = birds.get("birds");
 			for (UserAnimal userAnimal : feiqin.getUserAnimalList()) {
 				logger.debug("飞禽类获奖人id：" + userAnimal.getUserid());
+
 				for (Long aID : userAnimal.getAnimalMap().keySet()) {
+					Animal animal = userAnimal.getAnimalMap().get(aID);
 					if (feiqin.getAnimalId().equals(aID)) {
-						Animal animal = userAnimal.getAnimalMap().get(aID);
-						int toUserScore = animal.getScore() * animal.getMultiple();
-						logger.debug(" 赔偿积分：" + toUserScore+" ");
+						UserAnimal temp = userDate.get(userAnimal.getUserid());
+						// 设置当前用户赔偿
+						temp.setOutTotalScore(temp.getOutTotalScore() + (animal.getScore() * animal.getMultiple()));
+						temp.getAnimalMap().get(aID).setSelected(true);
 
 					}
 
 				}
 			}
-			
+
+			// userDate数据已经装完成
+			// 1.推送消息JMS
+
+			// 2.保存数据
+			List<UserGameResult> uResult = new ArrayList<>();
+			for (Long userid : userDate.keySet()) {
+				UserAnimal userAnimal = userDate.get(userid);
+				UserGameResult ugr = new UserGameResult();
+				ugr.setOriginalScore(userAnimal.getInTotalScore());
+				ugr.setResultScore(userAnimal.getOutTotalScore());
+				Player player = new Player();
+				player.setUserId(userid);
+				ugr.setPlayer(player);
+				List<ResultAnimal> rAnimalList = new ArrayList<>();
+				for (Long animalid : userAnimal.getAnimalMap().keySet()) {
+					Animal temp = userAnimal.getAnimalMap().get(animalid);
+					ResultAnimal rTemp = new ResultAnimal();
+					BaseAnimal ba = new BaseAnimal();
+					ba.setId(animalid);
+					rTemp.setAnimal(ba);
+					rTemp.setOriginalScore(temp.getScore());
+					if (temp.isSelected()) {
+						rTemp.setResultScore(temp.getScore() * temp.getMultiple());
+						rTemp.setSelected(true);
+					} else {
+						rTemp.setResultScore(0);
+						rTemp.setSelected(false);
+					}
+					rAnimalList.add(rTemp);
+					ugr.setDetails(rAnimalList);
+
+				}
+				uResult.add(ugr);
+
+			}
+			result.setResult(uResult);
+
+			// 保存数据
+			try {
+				gameLogicCenterService.saveResultData(result);
+			} catch (Exception e) {
+
+				e.printStackTrace();
+			}
 
 		} else if (typeOfAnimal.getAnimalId().equals(5l) || typeOfAnimal.getAnimalId().equals(6l)
 				|| typeOfAnimal.getAnimalId().equals(7l) || typeOfAnimal.getAnimalId().equals(8l)) {
@@ -362,56 +453,189 @@ public class AnimalUtil {
 					+ (typeOfAnimal.getTotal() + beast.get("beast").getTotal()));
 			// 获奖结果
 			logger.debug("获奖人名单如下：");
-			
+
+			PlayerGameResult result = new PlayerGameResult();
+			BaseAnimal winner = new BaseAnimal();
+			// 设置开奖的动物
+			winner.setId(typeOfAnimal.getAnimalId());
+			result.setAnimal(winner);
+			result.setBatchNum(batchNum);
+			result.setCreateTime(new Date());
+			result.setIncomeTotalScore((long) toatalScore);
+			result.setOutTotalScore((long) typeOfAnimal.getTotal() + beast.get("beast").getTotal());
+			result.setResultTotalScore(
+					(long) (toatalScore - (typeOfAnimal.getTotal() + beast.get("beast").getTotal())));
+			if (toatalScore - (typeOfAnimal.getTotal() + beast.get("beast").getTotal()) > 0) {
+				result.setType(0);
+			} else {
+				result.setType(1);
+			}
+
 			for (UserAnimal userAnimal : typeOfAnimal.getUserAnimalList()) {
 				logger.debug("获奖人id：" + userAnimal.getUserid());
-				
+
 				for (Long aID : userAnimal.getAnimalMap().keySet()) {
 					if (typeOfAnimal.getAnimalId().equals(aID)) {
 						Animal animal = userAnimal.getAnimalMap().get(aID);
+
+						UserAnimal temp = userDate.get(userAnimal.getUserid());
+						// 设置当前用户赔偿
+						temp.setOutTotalScore(animal.getScore() * animal.getMultiple());
+
+						temp.getAnimalMap().get(aID).setSelected(true);
+
 						int toUserScore = animal.getScore() * animal.getMultiple();
-						logger.debug(" 赔偿积分：" + toUserScore+" ");
+						logger.debug(" 赔偿积分：" + toUserScore + " ");
 
 					}
 
 				}
 
 			}
-			//走兽类
-			TypeOfAnimal zouShou=beast.get("beast");
+			// 走兽类
+			TypeOfAnimal zouShou = beast.get("beast");
 			for (UserAnimal userAnimal : zouShou.getUserAnimalList()) {
 				logger.debug("走兽类获奖人id：" + userAnimal.getUserid());
 				for (Long aID : userAnimal.getAnimalMap().keySet()) {
 					if (zouShou.getAnimalId().equals(aID)) {
 						Animal animal = userAnimal.getAnimalMap().get(aID);
-						int toUserScore = animal.getScore() * animal.getMultiple();
-						logger.debug(" 赔偿积分：" + toUserScore+" ");
+						UserAnimal temp = userDate.get(userAnimal.getUserid());
+						// 设置当前用户赔偿
+						temp.setOutTotalScore(temp.getOutTotalScore() + (animal.getScore() * animal.getMultiple()));
+						temp.getAnimalMap().get(aID).setSelected(true);
 
 					}
 
 				}
 			}
-			
-			
+			// userDate数据已经装完成
+			// 1.推送消息JMS
+
+			// 2.保存数据
+			List<UserGameResult> uResult = new ArrayList<>();
+			for (Long userid : userDate.keySet()) {
+				UserAnimal userAnimal = userDate.get(userid);
+				UserGameResult ugr = new UserGameResult();
+				ugr.setOriginalScore(userAnimal.getInTotalScore());
+				ugr.setResultScore(userAnimal.getOutTotalScore());
+				Player player = new Player();
+				player.setUserId(userid);
+				ugr.setPlayer(player);
+				List<ResultAnimal> rAnimalList = new ArrayList<>();
+				for (Long animalid : userAnimal.getAnimalMap().keySet()) {
+					Animal temp = userAnimal.getAnimalMap().get(animalid);
+					ResultAnimal rTemp = new ResultAnimal();
+					BaseAnimal ba = new BaseAnimal();
+					ba.setId(animalid);
+					rTemp.setAnimal(ba);
+					rTemp.setOriginalScore(temp.getScore());
+					if (temp.isSelected()) {
+						rTemp.setResultScore(temp.getScore() * temp.getMultiple());
+						rTemp.setSelected(true);
+					} else {
+						rTemp.setResultScore(0);
+						rTemp.setSelected(false);
+					}
+					rAnimalList.add(rTemp);
+					ugr.setDetails(rAnimalList);
+
+				}
+				uResult.add(ugr);
+
+			}
+			result.setResult(uResult);
+
+			// 保存数据
+			try {
+				gameLogicCenterService.saveResultData(result);
+			} catch (Exception e) {
+
+				e.printStackTrace();
+			}
+
 		} else {
 			// 鲨鱼
 			logger.debug("游戏结果如下：");
 			logger.debug("...收入总分为：" + toatalScore + ",赔偿总分为[当前开奖动物]：" + typeOfAnimal.getTotal());
 			// 获奖结果
 			logger.debug("获奖人名单如下：");
+			PlayerGameResult result = new PlayerGameResult();
+			BaseAnimal winner = new BaseAnimal();
+			// 设置开奖的动物
+			winner.setId(typeOfAnimal.getAnimalId());
+			result.setAnimal(winner);
+			result.setBatchNum(batchNum);
+			result.setCreateTime(new Date());
+			result.setIncomeTotalScore((long) toatalScore);
+			result.setOutTotalScore((long) typeOfAnimal.getTotal());
+			result.setResultTotalScore((long) (toatalScore - typeOfAnimal.getTotal()));
+			if (toatalScore - typeOfAnimal.getTotal() > 0) {
+				result.setType(0);
+			} else {
+				result.setType(1);
+			}
+
 			for (UserAnimal userAnimal : typeOfAnimal.getUserAnimalList()) {
 				logger.debug("获奖人id：" + userAnimal.getUserid());
 				for (Long aID : userAnimal.getAnimalMap().keySet()) {
 					if (typeOfAnimal.getAnimalId().equals(aID)) {
 						Animal animal = userAnimal.getAnimalMap().get(aID);
-						int toUserScore = animal.getScore() * animal.getMultiple();
-						logger.debug(" 赔偿积分：" + toUserScore+" ");
+						UserAnimal temp = userDate.get(userAnimal.getUserid());
+						// 设置当前用户赔偿
+						temp.setOutTotalScore(temp.getOutTotalScore() + (animal.getScore() * animal.getMultiple()));
+						temp.getAnimalMap().get(aID).setSelected(true);
 
 					}
 
 				}
 
 			}
+
+			// userDate数据已经装完成
+			// 1.推送消息JMS
+
+			// 2.保存数据
+			List<UserGameResult> uResult = new ArrayList<>();
+			for (Long userid : userDate.keySet()) {
+				UserAnimal userAnimal = userDate.get(userid);
+				UserGameResult ugr = new UserGameResult();
+				ugr.setOriginalScore(userAnimal.getInTotalScore());
+				ugr.setResultScore(userAnimal.getOutTotalScore());
+				Player player = new Player();
+				player.setUserId(userid);
+				ugr.setPlayer(player);
+				List<ResultAnimal> rAnimalList = new ArrayList<>();
+				for (Long animalid : userAnimal.getAnimalMap().keySet()) {
+					Animal temp = userAnimal.getAnimalMap().get(animalid);
+					ResultAnimal rTemp = new ResultAnimal();
+					BaseAnimal ba = new BaseAnimal();
+					ba.setId(animalid);
+					rTemp.setAnimal(ba);
+					rTemp.setOriginalScore(temp.getScore());
+					if (temp.isSelected()) {
+						rTemp.setResultScore(temp.getScore() * temp.getMultiple());
+						rTemp.setSelected(true);
+					} else {
+						rTemp.setResultScore(0);
+						rTemp.setSelected(false);
+					}
+					rAnimalList.add(rTemp);
+					ugr.setDetails(rAnimalList);
+
+				}
+				uResult.add(ugr);
+
+			}
+			result.setResult(uResult);
+
+			// 保存数据
+			try {
+				gameLogicCenterService.saveResultData(result);
+			} catch (Exception e) {
+
+				e.printStackTrace();
+			}
+
 		}
 	}
 
@@ -423,4 +647,5 @@ public class AnimalUtil {
 		int s = random.nextInt(max) % (max - min + 1) + min;
 		return s;
 	}
+
 }

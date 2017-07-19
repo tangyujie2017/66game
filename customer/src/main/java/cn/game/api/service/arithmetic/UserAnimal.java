@@ -5,7 +5,9 @@ import java.util.Map;
 public class UserAnimal {
 	private Long userid;
 	private Map<Long, Animal> animalMap;
-
+    private Integer inTotalScore;//用户购买总金额
+    private Integer outTotalScore;//用户中奖后赔偿金额
+    
 	public Long getUserid() {
 		return userid;
 	}
@@ -22,6 +24,24 @@ public class UserAnimal {
 
 	public void setAnimalMap(Map<Long, Animal> animalMap) {
 		this.animalMap = animalMap;
+	}
+	
+
+	
+	public Integer getInTotalScore() {
+		return inTotalScore;
+	}
+
+	public void setInTotalScore(Integer inTotalScore) {
+		this.inTotalScore = inTotalScore;
+	}
+
+	public Integer getOutTotalScore() {
+		return outTotalScore;
+	}
+
+	public void setOutTotalScore(Integer outTotalScore) {
+		this.outTotalScore = outTotalScore;
 	}
 
 	@Override

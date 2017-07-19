@@ -27,9 +27,52 @@ public class UserGameResult {
 	@JoinTable(name = "userresult_resultanimal")
 	private List<ResultAnimal> details;
 	
+	
 	@Column
 	private Integer originalScore;
 	
 	@Column
 	private Integer resultScore;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
+	public List<ResultAnimal> getDetails() {
+		return details;
+	}
+
+	public void setDetails(List<ResultAnimal> details) {
+		this.details = details;
+	}
+
+	public Integer getOriginalScore() {
+		return originalScore;
+	}
+
+	public void setOriginalScore(Integer originalScore) {
+		this.originalScore = originalScore;
+	}
+
+	public Integer getResultScore() {
+		return resultScore;
+	}
+
+	public void setResultScore(Integer resultScore) {
+		this.resultScore = resultScore;
+	}
+	
+	
 }

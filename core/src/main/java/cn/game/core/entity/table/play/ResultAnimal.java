@@ -31,4 +31,40 @@ public class ResultAnimal implements Serializable {
 	
 	@Column
 	private Integer resultScore;
+	@Column
+	private boolean selected=false;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public BaseAnimal getAnimal() {
+		return animal;
+	}
+	public void setAnimal(BaseAnimal animal) {
+		this.animal = animal;
+	}
+	public Integer getOriginalScore() {
+		return originalScore;
+	}
+	public void setOriginalScore(Integer originalScore) {
+		this.originalScore = originalScore;
+	}
+	public Integer getResultScore() {
+		return resultScore;
+	}
+	public void setResultScore(Integer resultScore) {
+		this.resultScore = resultScore;
+	}
+	public boolean isSelected() {
+		return selected;
+	}
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
+	
+	
+	
+	
 }

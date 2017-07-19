@@ -6,7 +6,7 @@ import java.util.List;
 public class TypeOfAnimal {
 	private Long animalId;
 	private List<UserAnimal> userAnimalList =new ArrayList<UserAnimal>();
-	private Integer total=0;
+	private Integer total=0;//赔偿总额
 	private Integer income=0;
 	
 	public Long getAnimalId() {

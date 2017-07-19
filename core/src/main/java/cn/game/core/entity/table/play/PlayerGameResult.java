@@ -9,8 +9,10 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Entity(name="player_game_result")
 public class PlayerGameResult implements Serializable{
@@ -41,8 +43,87 @@ public class PlayerGameResult implements Serializable{
 	@Column
 	private Integer type;//0：表示赚1：表示赔
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name = "animal_id")
+	private BaseAnimal animal;
+	
+	public BaseAnimal getAnimal() {
+		return animal;
+	}
+
+	public void setAnimal(BaseAnimal animal) {
+		this.animal = animal;
+	}
+
 	//游戏结果详情
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "gameresult_userresult")
 	private List<UserGameResult> result;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getBatchNum() {
+		return batchNum;
+	}
+
+	public void setBatchNum(String batchNum) {
+		this.batchNum = batchNum;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Long getIncomeTotalScore() {
+		return incomeTotalScore;
+	}
+
+	public void setIncomeTotalScore(Long incomeTotalScore) {
+		this.incomeTotalScore = incomeTotalScore;
+	}
+
+	public Long getOutTotalScore() {
+		return outTotalScore;
+	}
+
+	public void setOutTotalScore(Long outTotalScore) {
+		this.outTotalScore = outTotalScore;
+	}
+
+	public Long getResultTotalScore() {
+		return resultTotalScore;
+	}
+
+	public void setResultTotalScore(Long resultTotalScore) {
+		this.resultTotalScore = resultTotalScore;
+	}
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
+
+	public List<UserGameResult> getResult() {
+		return result;
+	}
+
+	public void setResult(List<UserGameResult> result) {
+		this.result = result;
+	}
+	
+	
+	
 }

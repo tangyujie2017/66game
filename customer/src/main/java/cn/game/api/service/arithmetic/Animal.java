@@ -6,6 +6,7 @@ public class Animal {
 	private Integer score;
 	private Integer multiple;
 	private String type;
+	private boolean selected=false;
 
 	public Long getId() {
 		return id;
@@ -45,6 +46,16 @@ public class Animal {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	
+
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelected(boolean selected) {
+		this.selected = selected;
 	}
 
 	public Animal(Long id, String name, Integer score, Integer multiple, String type) {
