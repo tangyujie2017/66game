@@ -2,6 +2,7 @@ package cn.game.api.controller;
 
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
@@ -14,11 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import cn.game.api.controller.req.BaseRequest;
 import cn.game.api.controller.req.BaseResponse;
+import cn.game.api.controller.req.login.TestReq;
 import cn.game.api.controller.req.login.WXLoginReq;
 import cn.game.api.service.login.GameLoginService;
 import cn.game.core.entity.table.play.Player;
+import cn.game.core.entity.table.play.PlayerAccount;
 
-@Controller(value="/api/v1/wx")
+@Controller
 public class GameLoginController {
 	private static Logger logger = Logger.getLogger(GameLoginController.class);
 	@Autowired
@@ -28,7 +31,7 @@ public class GameLoginController {
 	 * 用于微信用户登录
 	 * 
 	 **/
-	@PostMapping(value="/wxLogin")
+	@PostMapping(value="/api/v1/wx/wxLogin")
 	@ResponseBody
 	public ResponseEntity<BaseResponse> wxLogin(@ Valid @RequestBody BaseRequest<WXLoginReq> req,BindingResult result){
 		if (result.hasErrors()) {
@@ -37,9 +40,14 @@ public class GameLoginController {
 		//检查用户在数据库是否存在
 		
 		Player player=gameLoginService.checkWxUser(req.getData().getWxUnionid());
-		if(player.getUserId()==null){
+		if(player==null){
 			//说明此微信没有存在数据库
 			 player =new Player();
+			 PlayerAccount account=new PlayerAccount();
+			 account.setHistoryPayRecord(0l);
+			 account.setPlayer(player);
+			 account.setTotalGold(200l);
+			 player.setAccout(account);
 			 player.setAuthCode(req.getData().getAuthCode());
 			 player.setInvitationNum(req.getData().getInvitationNum()==null?"":req.getData().getInvitationNum());
 			 player.setWxAccessToken(req.getData().getWxAccessToken());
@@ -56,6 +64,22 @@ public class GameLoginController {
 		}else{
 			return BaseResponse.success(player);
 		}
+		
+		
+	}
+	
+	
+	
+	
+	
+	@PostMapping(value="/api/v1/wx/test")
+	@ResponseBody
+	public ResponseEntity<BaseResponse> wxLogin(@RequestBody BaseRequest<TestReq> req,HttpServletRequest  request){
+		
+		System.out.println(request.getParameter("name"));
+	//	System.out.println(req.getData().getName());
+		return null;
+	
 		
 		
 	}

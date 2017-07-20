@@ -3,6 +3,7 @@ package cn.game.core.entity.table.play;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -51,7 +52,7 @@ public class Player implements Serializable {
 	@Column(name = "is_lock")
 	private Boolean isLock;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "accout_id")  
     private   PlayerAccount accout;
 	

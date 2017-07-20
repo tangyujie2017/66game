@@ -27,7 +27,7 @@ public class GameLogicCenterServiceImpl implements GameLogicCenterService {
 	
 	
 	@Override
-	public void palyReady(Long userid, List<Animal> list) throws Exception {
+	public String  palyReady(Long userid, List<Animal> list) throws Exception {
 		// 获得批次号
 		String current_batch = redisRepository.getString("current_batch");
 		// 存储数据
@@ -35,6 +35,7 @@ public class GameLogicCenterServiceImpl implements GameLogicCenterService {
 
 		// 加入队列
 		AnimalUtil.receiver(current_batch, userid, list,this);
+		return current_batch;
 
 	}
 

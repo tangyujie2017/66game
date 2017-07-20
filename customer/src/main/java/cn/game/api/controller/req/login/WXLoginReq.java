@@ -27,7 +27,7 @@ public class WXLoginReq implements Serializable{
 	private String wxDynamicToken;// 字符串类型；当 accessToken 过期时把该值传给 refreshToken 接口刷新 accessToken 的有效期。dynamicToken
 									// 的有效期为30天
 
-    @NotEmpty
+    
 	private Long wxExpires;// 数字类型；accessToken 有效期，单位（秒）
 
     @NotEmpty

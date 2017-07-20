@@ -24,7 +24,7 @@ public class Producer  {
     @Autowired
     private Topic topic;
 
-   @Scheduled(fixedDelay=3000)//每3s执行1次
+   //@Scheduled(fixedDelay=3000)//每3s执行1次
     public void send() {
       
 //       this.jmsMessagingTemplate.convertAndSend(this.queue, "hi,activeMQ");

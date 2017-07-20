@@ -8,7 +8,7 @@ import cn.game.core.tools.Page;
 
 public interface GameLogicCenterService {
 	//玩家选择后提交数据(提交到一个批次里)
-	public void palyReady(Long userid,List<Animal> list) throws Exception;
+	public String palyReady(Long userid,List<Animal> list) throws Exception;
 	
 	
 	// 保存用户选择数据
