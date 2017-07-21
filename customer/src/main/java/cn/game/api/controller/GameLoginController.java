@@ -2,7 +2,6 @@ package cn.game.api.controller;
 
 import java.util.Date;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
@@ -15,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import cn.game.api.controller.req.BaseRequest;
 import cn.game.api.controller.req.BaseResponse;
-import cn.game.api.controller.req.login.TestReq;
 import cn.game.api.controller.req.login.WXLoginReq;
 import cn.game.api.service.login.GameLoginService;
 import cn.game.core.entity.table.play.Player;
 import cn.game.core.entity.table.play.PlayerAccount;
+import cn.game.core.service.vo.PlayerVo;
 
 @Controller
 public class GameLoginController {
@@ -37,6 +36,7 @@ public class GameLoginController {
 		if (result.hasErrors()) {
 			return	BaseResponse.systemError("请求参数错误");
 		}
+		logger.debug("微信新用户登录");
 		//检查用户在数据库是否存在
 		
 		Player player=gameLoginService.checkWxUser(req.getData().getWxUnionid());
@@ -59,30 +59,17 @@ public class GameLoginController {
 			 player.setWxUnionid(req.getData().getWxUnionid());
 			 player.setIsLock(false);
 			 player.setCreateTime(new Date());
+			 PlayerVo vo= PlayerVo.PlayerToVo(player);
 			 player= gameLoginService.saveWxUser(player);
-			 return BaseResponse.success(player);
+			 return BaseResponse.success(vo);
 		}else{
-			return BaseResponse.success(player);
+			PlayerVo vo= PlayerVo.PlayerToVo(player);
+			return BaseResponse.success(vo);
 		}
 		
 		
 	}
 	
-	
-	
-	
-	
-	@PostMapping(value="/api/v1/wx/test")
-	@ResponseBody
-	public ResponseEntity<BaseResponse> wxLogin(@RequestBody BaseRequest<TestReq> req,HttpServletRequest  request){
-		
-		System.out.println(request.getParameter("name"));
-	//	System.out.println(req.getData().getName());
-		return null;
-	
-		
-		
-	}
 	/**
 	 * 用于微信用户刷新token或修改其他值
 	 * 
@@ -90,6 +77,7 @@ public class GameLoginController {
 	@PostMapping(value="/refresh ")
 	@ResponseBody
 	public ResponseEntity<BaseResponse> wxRefresh (@ Valid @RequestBody BaseRequest<WXLoginReq> req,BindingResult result){
+		logger.debug("微信新用户刷新数据");
 		if (result.hasErrors()) {
 			return	BaseResponse.systemError("请求参数错误");
 		}
@@ -100,17 +88,15 @@ public class GameLoginController {
 		 //说明此微信没有存在数据库
 		 Player player =new Player();
 		 player.setUserId(req.getData().getUserId());
-		 player.setAuthCode(req.getData().getAuthCode());
-		 player.setInvitationNum(req.getData().getInvitationNum()==null?"":req.getData().getInvitationNum());
 		 player.setWxAccessToken(req.getData().getWxAccessToken());//两小时修改一次
 		 player.setWxDynamicToken(req.getData().getWxDynamicToken());//一个月修改一次
-		 player.setWxExpires(req.getData().getWxExpires());
 		 player.setWxHeadimgurl(req.getData().getWxHeadimgurl());
 		 player.setWxNickname(req.getData().getWxNickname());
-		 player.setWxOpenId(req.getData().getWxOpenId());
-		 player.setWxUnionid(req.getData().getWxUnionid());
+		 //player.setWxOpenId(req.getData().getWxOpenId());
+		 //player.setWxUnionid(req.getData().getWxUnionid());
 		 player= gameLoginService.saveWxUser(player);
-		 return BaseResponse.success(player);
+		 PlayerVo vo= PlayerVo.PlayerToVo(player);
+		 return BaseResponse.success(vo);
 		
 		
 	}

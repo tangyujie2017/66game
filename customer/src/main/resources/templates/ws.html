@@ -1,0 +1,58 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>广播式WebSocket</title>
+<script th:src="@{js/jquery-3.1.1.js}"></script>
+<script th:src="@{js/mqttws31.js}"></script>
+
+</head>
+<body onload="disconnect()">
+    <input type="button" id="btn-start" value="连接到mq"/>
+    <br/>
+     <input type="text" id="text-value" value=""/>
+    <input type="button" id="btn-send" value="发送"/>
+
+
+	<script type="text/javascript">
+
+	var host="localhost";
+	var port=61616;
+	var clientId="myWeb";
+	var destination="test";
+	window.onload=function(){
+		
+		document.getElementById("btn-start").onclick=function(){
+			window.client=new Messaging.Client(host,Number(port),clientId);
+			client.onMessageArrived=function(e){
+				alert(e.payloadstring);
+			}
+			client.onConnectionLost=function (e){
+				alert("Lost");
+			}
+			client.connect({
+				onSuccess:function(){
+					client.subscribe(destination);
+					alert("OK");
+				},
+				onFailure:function(){
+					alert("connect Failure");
+				}
+			});
+			
+		}
+		document.getElementById("btn-send").onclick=function(){
+			var text=document.getElementById("text-value").value();
+			if(text!=""){
+				var message= new new Messaging.Message(text)
+				message.destinationName=destination;
+				client.send(message);
+			}
+		}
+	}
+	
+	
+
+
+</script>
+</body>
+</html>

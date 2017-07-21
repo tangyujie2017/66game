@@ -7,7 +7,7 @@ import cn.game.core.entity.table.play.PlayerAccount;
 
 public class PlayerVo {
 
-	private static final long serialVersionUID = 1L;
+
 
 	private Long userId;
 	// 授权
@@ -145,7 +145,24 @@ public class PlayerVo {
 
 	public static PlayerVo PlayerToVo(Player player) {
 		PlayerVo vo = new PlayerVo();
-		
+		vo.setAuthCode(player.getAuthCode());
+		vo.setCreateTime(player.getCreateTime());
+		vo.setInvitationNum(player.getInvitationNum());
+		vo.setIsLock(player.getIsLock());
+		vo.setUserId(player.getUserId());
+		vo.setWxAccessToken(player.getWxAccessToken());
+		vo.setWxDynamicToken(player.getWxDynamicToken());
+
+		vo.setWxExpires(player.getWxExpires());
+		vo.setWxHeadimgurl(player.getWxHeadimgurl());
+		vo.setWxNickname(player.getWxNickname());
+		vo.setWxOpenId(player.getWxOpenId());
+		vo.setWxUnionid(player.getWxUnionid());
+		PlayerAccountVo accountVo = new PlayerAccountVo();
+		accountVo.setAccout_id(player.getAccout().getAccout_id());
+		accountVo.setHistoryPayRecord(player.getAccout().getHistoryPayRecord());
+		accountVo.setTotalGold(player.getAccout().getTotalGold());
+		vo.setAccout(accountVo);
 		return vo;
 
 	}
