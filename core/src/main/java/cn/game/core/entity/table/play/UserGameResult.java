@@ -2,6 +2,7 @@ package cn.game.core.entity.table.play;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,7 +24,7 @@ public class UserGameResult {
 	@JoinColumn(name = "player_id")
 	private Player player;
 	//游戏结果详情
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY ,cascade =CascadeType.ALL)
 	@JoinTable(name = "userresult_resultanimal")
 	private List<ResultAnimal> details;
 	

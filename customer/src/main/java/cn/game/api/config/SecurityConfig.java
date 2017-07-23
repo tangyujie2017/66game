@@ -27,7 +27,7 @@ public class SecurityConfig {
           .csrf().disable()
           .antMatcher("/api/**")
           .authorizeRequests()
-          .antMatchers("/api/v1/wx/*").permitAll();
+          .antMatchers("/api/v1/*/*").permitAll();
     
     }
 

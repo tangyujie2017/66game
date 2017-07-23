@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
-@Entity(name = "player")
+@Entity
 public class Player implements Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -8,14 +8,14 @@ public class Test {
 	public static void main(String[] args) {
 
 		try {
-			AnimalUtil.receiver("1231456", 1l, createAnimalList(),null);
+			//AnimalUtil.receiver("1231456", 1l, createAnimalList(),null);
 //			AnimalUtil.receiver("1231456", 2l, createAnimalList());
 //			AnimalUtil.receiver("1231456", 3l, createAnimalList());
 //			AnimalUtil.receiver("1231456", 4l, createAnimalList());
 //
 //			AnimalUtil.receiver("1231456", 5l, createAnimalList());
 			
-			AnimalUtil.matcher("1231456",null);
+			//AnimalUtil.matcher("1231456",null);
 			
 		} catch (Exception e) {
 

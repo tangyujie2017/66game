@@ -1,6 +1,14 @@
 package cn.game.api.service.arithmetic;
 
+
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Animal {
+	/**
+	 * 
+	 */
+
 	private Long id;
 	private String name;
 	private Integer score;
@@ -65,6 +73,10 @@ public class Animal {
 		this.score = score;
 		this.multiple = multiple;
 		this.type=type;
+	}
+   
+	public Animal() {
+		super();
 	}
 
 	@Override

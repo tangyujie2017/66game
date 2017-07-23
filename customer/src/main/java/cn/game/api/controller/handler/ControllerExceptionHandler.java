@@ -150,6 +150,7 @@ public class ControllerExceptionHandler extends AbstractErrorController {
 			msg = mapper.writeValueAsString(BaseResponse.newFail(BaseResponse.STATUS_BADREQUEST, "您访问的资源暂时不可用"));
 			handleJSONError(response, msg, HttpStatus.OK);
 		} catch (Exception e) {
+			e.printStackTrace();
 			LOGGER.error("error:{}", e.getMessage(), e);
 		}
 		return null;

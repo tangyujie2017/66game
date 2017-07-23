@@ -242,8 +242,9 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 			List<T> list = q.getResultList();
 			return list.get(0);
 		} catch (Exception e) {
-			return null;
+			e.printStackTrace();
 		}
+		return null;
 	}
 	
 	@SuppressWarnings("unchecked")

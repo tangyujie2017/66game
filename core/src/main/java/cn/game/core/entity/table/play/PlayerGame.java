@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -41,7 +42,7 @@ public class PlayerGame implements Serializable{
 	@Column(name = "total_score")
 	private Long totalScore;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY  ,cascade=CascadeType.ALL )
 	@JoinTable(name = "playegame_gameanimal")
 	private List<GameAnimal> animalList;
 

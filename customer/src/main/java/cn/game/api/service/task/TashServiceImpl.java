@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -18,13 +19,14 @@ public class TashServiceImpl implements TaskService {
 	private RedisRepository redisRepository;
 	@Resource
 	private GameLogicCenterService gameLogicCenterService;
+	
 	@Scheduled(fixedRate = 30000)
 	public void generateBatchNo() {
 		System.out.println("我正在生成批次号");
 		String current_batch = redisRepository.getString("current_batch");
 		//执行上一次的结果
 		if (current_batch != null && !current_batch.equals("")) {
-			AnimalUtil.matcher(current_batch,gameLogicCenterService);
+			gameLogicCenterService.matcher(current_batch);
 		}
 		redisRepository.saveString("current_batch", createBatch());
 

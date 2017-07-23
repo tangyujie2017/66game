@@ -20,101 +20,14 @@ import cn.game.core.entity.table.play.UserGameResult;
 public class AnimalUtil {
 	private static Logger logger = Logger.getLogger(AnimalUtil.class);
 
-	private static void initBatch(String batch) {
-		// 初始化批次号
-		System.out.println("初始化批次号_从缓存中拿到的批次为" + batch);
-		Map<Long, List<Animal>> map = new HashMap<Long, List<Animal>>();
 
-		Map<String, Map<Long, List<Animal>>> container = AnimalConstant.Data_Container;
-		if (container.get(batch) == null) {
-			logger.debug("设置游戏接收数据容器container[AnimalConstant.Data_Container]");
-			container.put(batch, map);
-		}
-	}
-
-	// 初始化每一局的基础数据
-	private static void initTypeOfAnimal() {
-		logger.debug("初始化[AnimalConstant.TypeOfAnimal]");
-		Map<String, TypeOfAnimal> gameInitData = AnimalConstant.TypeOfAnimal;
-		gameInitData.clear();
-		gameInitData.put("swallow", new TypeOfAnimal(1l));
-		gameInitData.put("pigeon", new TypeOfAnimal(2l));
-		gameInitData.put("peacock", new TypeOfAnimal(3l));
-		gameInitData.put("eagle", new TypeOfAnimal(4l));
-
-		gameInitData.put("rabbit", new TypeOfAnimal(5l));
-		gameInitData.put("monkey", new TypeOfAnimal(6l));
-		gameInitData.put("panda", new TypeOfAnimal(7l));
-		gameInitData.put("tiger", new TypeOfAnimal(8l));
-
-		gameInitData.put("shark", new TypeOfAnimal(9l));
-		// 飞禽
-		gameInitData.put("birds", new TypeOfAnimal(10l));
-		// 走兽
-		gameInitData.put("beast", new TypeOfAnimal(11l));
-
-	}
-
-	public static void receiver(String batch, Long userId, List<Animal> list,
-			GameLogicCenterService gameLogicCenterService) throws Exception {
-		AnimalUtil.initBatch(batch);
-		AnimalUtil.initTypeOfAnimal();
-		// batch 怎么来？
-
-		logger.debug("用户userId：" + userId + " 买入游戏批次号batch：" + batch + " 买入详情：");
-		Long totalScore = 0l;
-		List<GameAnimal> aList = new ArrayList<>();
-		for (Animal a : list) {
-			GameAnimal ga = new GameAnimal();
-			logger.debug("...动物[id_名字]：" + a.getId() + "_" + a.getName() + " 买入分数：" + a.getScore() + " 中奖赔偿分数[买入*赔率]"
-					+ "[" + a.getScore() + "*" + a.getMultiple() + "]=" + a.getScore() * a.getMultiple());
-
-			ga.setScore(a.getScore());
-			ga.setTotalScore((long) (a.getScore() * a.getMultiple()));
-			BaseAnimal animal = new BaseAnimal();
-			animal.setId(a.getId());
-			aList.add(ga);
-			ga.setAnimal(animal);
-			totalScore += a.getScore();
-		}
-		if (batch != null && !batch.equals("") && userId != null && list != null && list.size() > 0) {
-			Map<String, Map<Long, List<Animal>>> container = AnimalConstant.Data_Container;
-
-			Map<Long, List<Animal>> userMap = container.get(batch);
-
-			if (userMap != null) {
-				if (userMap.get(userId) != null && userMap.get(userId).size() > 0) {
-
-					throw new BizException("你已经提交过数据,请稍后！");
-				} else {
-					logger.debug("用户userId：" + userId + "的数据加入数据容器[AnimalConstant.Data_Container]");
-					userMap.put(userId, list);
-					// 保存用户购买数据进入数据库
-					PlayerGame playerGame = new PlayerGame();
-					playerGame.setBatchNum(batch);
-					playerGame.setCreateTime(new Date());
-					Player p = new Player();
-					p.setUserId(userId);
-					playerGame.setPlayer(p);
-					playerGame.setTotalScore(totalScore);
-					playerGame.setAnimalList(aList);
-					gameLogicCenterService.savePalyData(playerGame);
-				}
-				container.put(batch, userMap);
-			} else {
-				throw new BizException("batch已过期稍后重试");
-			}
-		} else {
-
-			throw new BizException("提交参数有异常,请检查后再提交");
-		}
-	}
+	
 
 	/**
 	 * 定时器任务每隔一定时间开启一批次的游戏结果
 	 * 
 	 */
-	public static void matcher(String batch, GameLogicCenterService gameLogicCenterService) {
+	public  void matcher(String batch, GameLogicCenterService gameLogicCenterService) {
 		logger.debug("开始进行匹配 匹配的批次号：" + batch);
 		Map<String, Map<Long, List<Animal>>> container = AnimalConstant.Data_Container;
 		if (batch != null && !batch.equals("")) {
@@ -144,7 +57,7 @@ public class AnimalUtil {
 	}
 
 	// 每一个用户详情
-	private static Map<Long, UserAnimal> userAnimalDateFormat(Map<Long, List<Animal>> userMap) {
+	private  Map<Long, UserAnimal> userAnimalDateFormat(Map<Long, List<Animal>> userMap) {
 
 		Set<Long> userids = userMap.keySet();
 		// 用户id 购买的用户
@@ -173,7 +86,7 @@ public class AnimalUtil {
 	}
 
 	// 同一批次计算总和汇总
-	private static Map<String, TypeOfAnimal> sumTotal(Map<Long, List<Animal>> userMap, Map<Long, UserAnimal> userDate) {
+	private  Map<String, TypeOfAnimal> sumTotal(Map<Long, List<Animal>> userMap, Map<Long, UserAnimal> userDate) {
 
 		Map<String, TypeOfAnimal> gameInitData = AnimalConstant.TypeOfAnimal;
 		if (gameInitData != null) {
@@ -202,7 +115,7 @@ public class AnimalUtil {
 		return gameInitData;
 	}
 
-	public static void playReslt(Map<String, TypeOfAnimal> dataIn, GameLogicCenterService gameLogicCenterService,
+	public  void playReslt(Map<String, TypeOfAnimal> dataIn, GameLogicCenterService gameLogicCenterService,
 			String batchNum, Map<Long, UserAnimal> userDate) {
 		// 只开一个
 		Integer toatalScore = 0;
@@ -438,7 +351,7 @@ public class AnimalUtil {
 
 			// 保存数据
 			try {
-				gameLogicCenterService.saveResultData(result);
+				//AnimalUtigameLogicCenterService.saveResultData(result);
 			} catch (Exception e) {
 
 				e.printStackTrace();
@@ -547,7 +460,7 @@ public class AnimalUtil {
 
 			// 保存数据
 			try {
-				gameLogicCenterService.saveResultData(result);
+				//gameLogicCenterService.saveResultData(result);
 			} catch (Exception e) {
 
 				e.printStackTrace();
@@ -630,7 +543,7 @@ public class AnimalUtil {
 
 			// 保存数据
 			try {
-				gameLogicCenterService.saveResultData(result);
+				//gameLogicCenterService.saveResultData(result);
 			} catch (Exception e) {
 
 				e.printStackTrace();
@@ -639,7 +552,7 @@ public class AnimalUtil {
 		}
 	}
 
-	private static int createRandom(int max) {
+	private  int createRandom(int max) {
 
 		int min = 0;
 		Random random = new Random();

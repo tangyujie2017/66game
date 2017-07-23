@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -56,7 +57,7 @@ public class PlayerGameResult implements Serializable{
 	}
 
 	//游戏结果详情
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY ,cascade=CascadeType.ALL)
 	@JoinTable(name = "gameresult_userresult")
 	private List<UserGameResult> result;
 

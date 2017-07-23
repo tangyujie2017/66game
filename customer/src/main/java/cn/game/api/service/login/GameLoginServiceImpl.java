@@ -21,11 +21,12 @@ public class GameLoginServiceImpl implements GameLoginService {
 	@Override
 	@Transactional
 	public Player saveWxUser(Player player) {
-		playerRepository.persist(player);
+		player=playerRepository.save(player);
 		return player;
 	}
 
 	@Override
+	@Transactional
 	public Player updateWxUser(Player player) {
 		playerRepository.update(player);
 		return player;

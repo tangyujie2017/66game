@@ -23,7 +23,7 @@ public class ResultAnimal implements Serializable {
 	@Column(name = "id")
 	private Long id;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY )
 	@JoinColumn(name = "animal_id")
 	private BaseAnimal animal;
 	@Column
