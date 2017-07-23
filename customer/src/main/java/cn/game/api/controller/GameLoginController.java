@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import cn.game.api.controller.req.BaseRequest;
-import cn.game.api.controller.req.BaseResponse;
 import cn.game.api.controller.req.login.WXLoginReq;
+import cn.game.api.controller.resp.BaseResponse;
 import cn.game.api.service.login.GameLoginService;
 import cn.game.core.entity.table.play.Player;
 import cn.game.core.entity.table.play.PlayerAccount;
@@ -61,7 +61,7 @@ public class GameLoginController {
 			player.setCreateTime(new Date());
 
 			player = gameLoginService.saveWxUser(player);
-			PlayerVo vo = PlayerVo.PlayerToVo(player);
+			PlayerVo vo = PlayerVo.playerToVo(player);
 			return BaseResponse.success(vo);
 		} else {
 			if (req.getData().getInvitationNum() != null && !"".equals(req.getData().getInvitationNum())) {
@@ -73,7 +73,7 @@ public class GameLoginController {
 			player.setWxAccessToken(req.getData().getWxAccessToken());
 			player.setWxDynamicToken(req.getData().getWxDynamicToken());
 			gameLoginService.updateWxUser(player);
-			PlayerVo vo = PlayerVo.PlayerToVo(player);
+			PlayerVo vo = PlayerVo.playerToVo(player);
 			return BaseResponse.success(vo);
 		}
 
@@ -105,7 +105,7 @@ public class GameLoginController {
 		// player.setWxOpenId(req.getData().getWxOpenId());
 		// player.setWxUnionid(req.getData().getWxUnionid());
 		player = gameLoginService.saveWxUser(player);
-		PlayerVo vo = PlayerVo.PlayerToVo(player);
+		PlayerVo vo = PlayerVo.playerToVo(player);
 		return BaseResponse.success(vo);
 
 	}

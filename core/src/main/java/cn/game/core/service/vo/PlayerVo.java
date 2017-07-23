@@ -143,7 +143,7 @@ public class PlayerVo {
 		this.accout = accout;
 	}
 
-	public static PlayerVo PlayerToVo(Player player) {
+	public static PlayerVo playerToVo(Player player) {
 		PlayerVo vo = new PlayerVo();
 		vo.setAuthCode(player.getAuthCode());
 		vo.setCreateTime(player.getCreateTime());
@@ -166,5 +166,5 @@ public class PlayerVo {
 		return vo;
 
 	}
-
+	
 }

@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.game.api.controller.req.BaseRequest;
-import cn.game.api.controller.req.BaseResponse;
 import cn.game.api.controller.req.wallet.ApiRechargeReq;
+import cn.game.api.controller.resp.BaseResponse;
 import cn.game.api.service.wallet.GameWalletService;
 
 @Controller

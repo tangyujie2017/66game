@@ -1,4 +1,4 @@
-package cn.game.api.controller.req;
+package cn.game.api.controller.resp;
 
 import java.io.Serializable;
 
@@ -23,6 +23,8 @@ public class BaseResponse implements Serializable {
 	public static int STATUS_ERROR = 10500;
 	/** 系统自定义错误. */
 	public static int STATUS_SYSTEM = 10100;
+	
+	public static int BUSINESS_SYSTEM = 11200;
 
 	/** 版本号. */
 	private String ver;
@@ -99,7 +101,9 @@ public class BaseResponse implements Serializable {
 	public BaseResponse(int status, String msg) {
 		this.status = status;
 		this.msg = msg;
+		//System.out.println(this);
 		base = new ResponseEntity<>(this, HttpStatus.OK);
+		//System.out.println(base);
 	}
 
 	public ResponseEntity<BaseResponse> build() {
@@ -128,6 +132,9 @@ public class BaseResponse implements Serializable {
 
 	public static ResponseEntity<BaseResponse> unauth(String msg) {
 		return new BaseResponse(BaseResponse.STATUS_UNAUTH, msg).build();
+	}
+	public static ResponseEntity<BaseResponse> business(String msg) {
+		return new BaseResponse(BaseResponse.BUSINESS_SYSTEM, msg).build();
 	}
 
 	public String getVer() {

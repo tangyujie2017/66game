@@ -30,7 +30,6 @@ import cn.game.core.tools.SearchAnnotation;
 import cn.game.core.tools.Order.SortType;
 import cn.game.core.tools.PropertyFilter.MatchType;
 
-
 @NoRepositoryBean
 public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 
@@ -57,7 +56,7 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 	public Page<T> findPageByGroups(Groups groups, Page<T> page, String sql, Class<?> classes) {
 		Integer currentPage = page.getCurrentPage();
 		Integer pageSize = page.getPageSize();
-		Map<String,Object> map = new HashMap<String,Object>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		sql = createSqlByGroupsAll(sql, groups, map);
 
 		Integer totalCount = countSqlResult(sql, map);
@@ -66,13 +65,15 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 		int offset = (currentPage - 1) * pageSize; // 起始下标
 		offset = offset > 0 ? offset : 0;
 		offset = offset < totalCount ? offset : totalCount;
-		map.put("offset",offset);
-		map.put("pageSize",pageSize);// 分页用的
-		
+		map.put("offset", offset);
+		map.put("pageSize", pageSize);// 分页用的
+
 		List<?> items = namedParameterJdbcTemplate.query(querySql, map, BeanPropertyRowMapper.newInstance(classes));
 
-//		List<?> items = namedParameterJdbcTemplate.getJdbcOperations().query(querySql, map.values().toArray(),
-//				BeanPropertyRowMapper.newInstance(classes));
+		// List<?> items =
+		// namedParameterJdbcTemplate.getJdbcOperations().query(querySql,
+		// map.values().toArray(),
+		// BeanPropertyRowMapper.newInstance(classes));
 		page.setTotalCount(totalCount);
 		page.setItems(items);
 
@@ -83,7 +84,7 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 	public List findByGroups(Groups groups, String sql, Class<?> classes) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		sql = createSqlByGroupsAll(sql, groups, map);
-		List<?> items = namedParameterJdbcTemplate.query(sql,  map, BeanPropertyRowMapper.newInstance(classes));
+		List<?> items = namedParameterJdbcTemplate.query(sql, map, BeanPropertyRowMapper.newInstance(classes));
 		return items;
 	}
 
@@ -96,13 +97,13 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 
 		return page;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<T> findEntityByGroups(Groups groups, String hql) {
 		Map<String, Object> values = new HashMap<String, Object>();
 
 		hql = createSqlByGroupsAll(hql, groups, values);// 将其按照sql的方式处理，因为hql提前有写好完整的语句
-		
+
 		return findListByHql(hql, values);
 	}
 
@@ -119,15 +120,15 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 
 	@SuppressWarnings("unchecked")
 	public List<T> findEntityByGroups(Groups groups) {
-		  System.out.println("-------------------------------------");
-		Map<String,Object> values = new HashMap<String,Object>();
+		System.out.println("-------------------------------------");
+		Map<String, Object> values = new HashMap<String, Object>();
 
 		String hql = createHqlByGroupsAll("", groups, values);
-		  System.out.println(hql);
+		System.out.println(hql);
 		return findListByHql(hql, values);
 	}
 
-	public Page<T> findPage(final Page<T> page, final String hql, final Map<String,Object> parameter) {
+	public Page<T> findPage(final Page<T> page, final String hql, final Map<String, Object> parameter) {
 		TypedQuery<T> q = createTypedQuery(hql, parameter);
 		Long totalCount = countResult(hql, parameter);
 		Integer total = totalCount.intValue();
@@ -158,7 +159,7 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 	 */
 	public long findTotalCountByGroups(Groups groups) {
 
-		Map<String,Object> values = new HashMap<String,Object>();
+		Map<String, Object> values = new HashMap<String, Object>();
 
 		String hql = createHqlByGroupsAll("", groups, values);
 
@@ -181,8 +182,8 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 	public void remove(Object entity) {
 		entityManger.remove(entity);
 	}
-	
-	public Integer excuteSql(String sql,Map<String,Object> parameter){
+
+	public Integer excuteSql(String sql, Map<String, Object> parameter) {
 		Query query = entityManger.createNativeQuery(sql);
 		if (parameter != null) {
 			for (Map.Entry<String, Object> entry : parameter.entrySet()) {
@@ -191,7 +192,8 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 		}
 		return query.executeUpdate();
 	}
-	public Integer excuteIntgerSql(String sql,Map<Integer,Object> parameter){
+
+	public Integer excuteIntgerSql(String sql, Map<Integer, Object> parameter) {
 		Query query = entityManger.createNativeQuery(sql);
 		if (parameter != null) {
 			for (Map.Entry<Integer, Object> entry : parameter.entrySet()) {
@@ -200,31 +202,32 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 		}
 		return query.executeUpdate();
 	}
-	
+
 	/**
 	 * 逻辑删除
+	 * 
 	 * @param id
-	 * @throws SecurityException 
-	 * @throws NoSuchMethodException 
+	 * @throws SecurityException
+	 * @throws NoSuchMethodException
 	 */
 	@Override
-	public void logicDelete(Long id) throws Exception{
+	public void logicDelete(Long id) throws Exception {
 		T entity = find(id);
 		Class clazz = entity.getClass();
 		Method method = clazz.getMethod("setEnable", Boolean.class);
-        method.invoke(entity, false);
-        update(entity);
+		method.invoke(entity, false);
+		update(entity);
 	}
-	
+
 	/**
 	 * 恢复逻辑删除的实体
 	 */
-	public void restoreEntity(Long id) throws Exception{
+	public void restoreEntity(Long id) throws Exception {
 		T entity = find(id);
 		Class clazz = entity.getClass();
 		Method method = clazz.getMethod("setEnable", Boolean.class);
-        method.invoke(entity, true);
-        update(entity);
+		method.invoke(entity, true);
+		update(entity);
 	}
 
 	public T find(Long id) {
@@ -235,91 +238,93 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 		try {
 			String keyName = propertyName.replace(".", "");
 			Class<T> tempclass = ReflectionUtils.getSuperClassGenricType(this.getClass());
-			String hql = " from " + tempclass.getSimpleName() + " where " + propertyName + "=:"+keyName;
-			Map<String,Object> parameter = new HashMap<String,Object>();
-			parameter.put(keyName,value);
+			String hql = " from " + tempclass.getSimpleName() + " where " + propertyName + "=:" + keyName;
+			Map<String, Object> parameter = new HashMap<String, Object>();
+			parameter.put(keyName, value);
 			TypedQuery<T> q = createTypedQuery(hql, parameter);
 			List<T> list = q.getResultList();
-			return list.get(0);
+			if (list.size() > 0) {
+				return list.get(0);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Object> findBySql(Groups groups, String[] selectStr, String[] groupStr) {
 		String sql = "";
 		if (groups.getOrderby() != null) {
 			groups.setOrderby("");
 		}
-		Map<String,Object> objects = new HashMap<String,Object>();
+		Map<String, Object> objects = new HashMap<String, Object>();
 		sql = composeString2(groups, null, selectStr, groupStr, objects);
 		Query q = createSqlQuery(sql, objects);
 
 		return q.getResultList();
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public List<Object> findBySql(String sql,Map<String,Object> parameter){
+	public List<Object> findBySql(String sql, Map<String, Object> parameter) {
 		Query q = createSqlQuery(sql, parameter);
 		return q.getResultList();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Object> findByHql(Groups groups, String[] selectStr, String[] groupStr) {
 		String hql = "";
 		if (groups.getOrderby() != null) {
 			groups.setOrderby("");
 		}
-		Map<String,Object> objects = new HashMap<String,Object>();
+		Map<String, Object> objects = new HashMap<String, Object>();
 		hql = composeString(groups, null, selectStr, groupStr, objects);
 		Query q = createQuery(hql, objects);
 
 		return q.getResultList();
 	}
-	
-	public Long findSumByGroupsAlias(Groups groups, String field){
-		List<Object> objs = findByHql(groups, new String[]{field}, null);
+
+	public Long findSumByGroupsAlias(Groups groups, String field) {
+		List<Object> objs = findByHql(groups, new String[] { field }, null);
 		Long result = 0L;
-		for(Object obj : objs){
+		for (Object obj : objs) {
 			result += Long.valueOf(obj.toString());
 		}
 		return result;
 	}
-	
-	public List<Long> findEntityByGroupsAlias(Groups groups, String field){
+
+	public List<Long> findEntityByGroupsAlias(Groups groups, String field) {
 		List<Long> userIds = new ArrayList<>();
-		List<Object> objs = findByHql(groups, new String[]{field}, new String[]{field});
-		for(Object obj : objs){
-			if(obj instanceof Object[]){
+		List<Object> objs = findByHql(groups, new String[] { field }, new String[] { field });
+		for (Object obj : objs) {
+			if (obj instanceof Object[]) {
 				Object[] arrays = (Object[]) obj;
-				if(arrays.length > 1){
+				if (arrays.length > 1) {
 					userIds.add(Long.valueOf(arrays[1].toString()));
 				}
-			}else{
+			} else {
 				userIds.add(Long.valueOf(obj.toString()));
 			}
 		}
 		return userIds;
 	}
-	
-	public List<Long> findSqlByGroupsAlias(Groups groups, String field){
+
+	public List<Long> findSqlByGroupsAlias(Groups groups, String field) {
 		List<Long> userIds = new ArrayList<>();
-		List<Object> objs = findBySql(groups, new String[]{field}, new String[]{field});
-		for(Object obj : objs){
+		List<Object> objs = findBySql(groups, new String[] { field }, new String[] { field });
+		for (Object obj : objs) {
 			userIds.add(Long.valueOf(obj.toString()));
 		}
 		return userIds;
 	}
 
 	@SuppressWarnings("rawtypes")
-	protected List findListByHql(String hql, Map<String,Object> parameter) {
+	protected List findListByHql(String hql, Map<String, Object> parameter) {
 		Query q = createQuery(hql, parameter);
 		return q.getResultList();
 	}
 
-	protected Integer countSqlResult(final String sql, final Map<String,Object> parameter) {
+	protected Integer countSqlResult(final String sql, final Map<String, Object> parameter) {
 		String countSql = prepareCount(sql);
 		try {
 			BigInteger count = findUniqueBySql(countSql, parameter);
@@ -330,7 +335,7 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 		}
 	}
 
-	protected long countHqlResult(final String hql, final Map<String,Object> parameter) {
+	protected long countHqlResult(final String hql, final Map<String, Object> parameter) {
 		String countHql = prepareCountHql(hql);
 		try {
 			Long count = findUnique(countHql, parameter);
@@ -351,16 +356,16 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	protected <X> X findUnique(final String hql, final Map<String,Object> parameter) {
+	protected <X> X findUnique(final String hql, final Map<String, Object> parameter) {
 		return (X) createQuery(hql, parameter).getSingleResult();
 	}
 
 	@SuppressWarnings("unchecked")
-	protected <X> X findUniqueBySql(final String sql, final Map<String,Object> parameter) {
+	protected <X> X findUniqueBySql(final String sql, final Map<String, Object> parameter) {
 		return (X) createSqlQuery(sql, parameter).getSingleResult();
 	}
 
-	protected Long countResult(final String hql, final Map<String,Object> parameter) {
+	protected Long countResult(final String hql, final Map<String, Object> parameter) {
 		String countHql = prepareCount(hql);
 		try {
 			Long count = findUnique(countHql, parameter);
@@ -371,7 +376,7 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 		}
 	}
 
-	private Query createQuery(final String hql, final Map<String,Object> parameter) {
+	private Query createQuery(final String hql, final Map<String, Object> parameter) {
 		Query query = entityManger.createQuery(hql);
 		if (parameter != null) {
 			for (Map.Entry<String, Object> entry : parameter.entrySet()) {
@@ -381,7 +386,7 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 		return query;
 	}
 
-	private TypedQuery<T> createTypedQuery(final String hql, final Map<String,Object> parameter) {
+	private TypedQuery<T> createTypedQuery(final String hql, final Map<String, Object> parameter) {
 		TypedQuery<T> query = entityManger.createQuery(hql, entityClass);
 		if (parameter != null) {
 			for (Map.Entry<String, Object> entry : parameter.entrySet()) {
@@ -446,6 +451,7 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 
 	/**
 	 * 只支持HQL
+	 * 
 	 * @param groups
 	 * @param page
 	 * @param selectStr
@@ -524,9 +530,10 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 		}
 		return hql;
 	}
-	
+
 	/**
 	 * 只支持SQL
+	 * 
 	 * @param groups
 	 * @param page
 	 * @param selectStr
@@ -551,7 +558,8 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 
 		// 有条件组内容
 		appendGroups2(groups, fromBuffer, whereBufferQian, Alias1, whereBufferHou, values);
-//		appendGroups(groups, fromBuffer, whereBufferQian, tempclass, Alias1, whereBufferHou, values);
+		// appendGroups(groups, fromBuffer, whereBufferQian, tempclass, Alias1,
+		// whereBufferHou, values);
 		String sql = "";
 		List<Order> orders = new ArrayList<Order>();
 		if ((groups.getOrderbys() == null || groups.getOrderbys().length <= 0) && groups.getOrderby() != null
@@ -677,9 +685,9 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 			slectBuffer = slectBuffer.delete(slectBuffer.length() - 1, slectBuffer.length());
 		}
 	}
-	
-	private void appendSelect2(String[] selectStrings, StringBuffer slectBuffer, Class<?> baseClass, List<String> Alias1,
-			StringBuffer fromBuffer, StringBuffer whereBufferQian) {
+
+	private void appendSelect2(String[] selectStrings, StringBuffer slectBuffer, Class<?> baseClass,
+			List<String> Alias1, StringBuffer fromBuffer, StringBuffer whereBufferQian) {
 		if (selectStrings == null || selectStrings.length == 0) {
 
 		} else {
@@ -755,7 +763,7 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 		}
 		orderBuffer = orderBuffer.delete(orderBuffer.length() - 1, orderBuffer.length());
 	}
-	
+
 	private void appendOrder2(List<Order> orders, StringBuffer orderBuffer, Class<?> baseClass, List<String> Alias1,
 			StringBuffer fromBuffer, StringBuffer whereBufferQian) {
 
@@ -824,8 +832,7 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 
 		}
 	}
-	
-	
+
 	private void appendGroup2(String[] groupStrings, StringBuffer groupBuffer, Class<?> baseClass, List<String> Alias1,
 			StringBuffer fromBuffer, StringBuffer whereBufferQian) {
 
@@ -846,7 +853,7 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 		}
 	}
 
-	private Query createSqlQuery(final String sql, final Map<String,Object> parameter) {
+	private Query createSqlQuery(final String sql, final Map<String, Object> parameter) {
 
 		Query query = entityManger.createNativeQuery(sql);
 		if (parameter != null) {
@@ -866,7 +873,7 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 		return count;
 	}
 
-	private String createSqlByGroupsAll(String sql, Groups groups, Map<String,Object> values) {
+	private String createSqlByGroupsAll(String sql, Groups groups, Map<String, Object> values) {
 		// from段
 		StringBuffer fromBuffer = new StringBuffer(" ");
 		// where 段
@@ -923,7 +930,7 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 	}
 
 	private void appendGroups2(Groups groups, StringBuffer fromBuffer, StringBuffer whereBufferQian,
-			List<String> Alias1, StringBuffer whereBufferHou, Map<String,Object> values) {
+			List<String> Alias1, StringBuffer whereBufferHou, Map<String, Object> values) {
 		if (groups.getGroupList() == null) {
 			System.out.println("groups的GroupList不能为空！");
 		} else {
@@ -946,7 +953,7 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 			} else {
 				StringBuffer whereAnd = new StringBuffer();
 				StringBuffer whereOr = new StringBuffer();
-//				List<Object> tempList = new ArrayList<Object>();
+				// List<Object> tempList = new ArrayList<Object>();
 				for (Group group : groups.getGroupList()) {
 					if (group.getRelation().equals(MatchType.AND)) {
 						appendGroup2(group, fromBuffer, whereBufferQian, Alias1, whereBufferHou, values);
@@ -954,17 +961,17 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 						if (whereOr.toString().equals("")) {
 							whereOr.append(" and ( ");
 						}
-//						tempList.add(group.getPropertyValue1());
-//						values.remove(group.getPropertyValue1());
+						// tempList.add(group.getPropertyValue1());
+						// values.remove(group.getPropertyValue1());
 					}
 
 				}
 				if (!whereOr.toString().equals("")) {
 					whereOr.append(" ) ");
 				}
-//				for (Object temp : tempList) {
-//					values.add(temp);
-//				}
+				// for (Object temp : tempList) {
+				// values.add(temp);
+				// }
 				whereBufferHou.append(whereAnd).append(whereOr);
 			}
 		}
@@ -1026,21 +1033,21 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 
 	private void addValues(Group group, StringBuffer whereBufferHou, Map<String, Object> values) {
 		String propertyName = group.getPropertyName();
-		if(!CommonUtil.isNull(propertyName)){
+		if (!CommonUtil.isNull(propertyName)) {
 			propertyName = propertyName.replace(".", "");
 			// 判断错误
 			if (group.getPropertyValue1() == null
 					&& !(group.getMatchType() == MatchType.NULL || group.getMatchType() == MatchType.NOTNULL)) {
 				System.out.println("传入值为空，但并不是查询NULL OR NOT NULL 请查证！");
-			}else if ("".equals(group.getPropertyValue1()) && group.getMatchType() == MatchType.NE) {
-				whereBufferHou.append(" :"+propertyName+" ");
+			} else if ("".equals(group.getPropertyValue1()) && group.getMatchType() == MatchType.NE) {
+				whereBufferHou.append(" :" + propertyName + " ");
 				values.put(propertyName, group.getPropertyValue1());
 			} else if (group.getPropertyValue1() != null && !"".equals(group.getPropertyValue1())) {
 				// 是in 或not in
 				if (group.getMatchType() == MatchType.IN || group.getMatchType() == MatchType.NOTIN) {
 					Collection<?> collection = (Collection<?>) group.getPropertyValue1();
 					StringBuffer inBuffer = new StringBuffer(" ( ");
-					inBuffer.append((":"+propertyName));
+					inBuffer.append((":" + propertyName));
 					List<Object> list = new ArrayList<Object>();
 					for (Object object : collection) {
 						list.add(object);
@@ -1056,8 +1063,8 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 					if (group.getPropertyValue1().getClass() == Date.class || group.isDate()
 							|| group.getPropertyValue1().getClass() == java.sql.Timestamp.class) {
 						values.put(propertyName, group.getPropertyValue1());
-						values.put(propertyName+"2", group.getPropertyValue2());
-						whereBufferHou.append(" :"+propertyName+" and :"+propertyName+"2 ");
+						values.put(propertyName + "2", group.getPropertyValue2());
+						whereBufferHou.append(" :" + propertyName + " and :" + propertyName + "2 ");
 					} else {
 						System.out.println("BETWEEN 规定只能用于时间，数字请用大于小于进行");
 					}
@@ -1065,14 +1072,14 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 				} else {
 					if (group.getPropertyValue1().getClass() == Date.class) {
 						values.put(propertyName, group.getPropertyValue1());
-						whereBufferHou.append(" :"+propertyName+" ");
+						whereBufferHou.append(" :" + propertyName + " ");
 					} else if (group.isDate()) {
 						values.put(propertyName, group.getPropertyValue1());
-						whereBufferHou.append(" :"+propertyName+" ");
+						whereBufferHou.append(" :" + propertyName + " ");
 					} else if (group.getPropertyValue1().getClass() == java.sql.Timestamp.class) {
-						whereBufferHou.append(" :"+propertyName+" ");
+						whereBufferHou.append(" :" + propertyName + " ");
 					} else {
-						whereBufferHou.append(" :"+propertyName+" ");
+						whereBufferHou.append(" :" + propertyName + " ");
 						if (group.getMatchType() == MatchType.LIKE) {
 							values.put(propertyName, "%" + group.getPropertyValue1() + "%");
 						} else {
@@ -1081,7 +1088,7 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 					}
 				}
 			} else if (group.getPropertyValue2() != null && !"".equals(group.getPropertyValue2())) {
-				whereBufferHou.append(" :"+propertyName+" ");
+				whereBufferHou.append(" :" + propertyName + " ");
 				if (group.getMatchType() == MatchType.LIKE) {
 					values.put(propertyName, "%" + group.getPropertyValue2() + "%");
 				} else {
@@ -1089,7 +1096,7 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 				}
 			}
 		}
-		
+
 	}
 
 	private boolean buildCase2(Group group, StringBuffer whereBufferHou, String alisStr) {
@@ -1195,7 +1202,7 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 			} else {
 				StringBuffer whereAnd = new StringBuffer();
 				StringBuffer whereOr = new StringBuffer();
-//				List<Object> tempList = new ArrayList<Object>();
+				// List<Object> tempList = new ArrayList<Object>();
 				for (Group group : groups.getGroupList()) {
 					if (group.getRelation().equals(MatchType.AND)) {
 						appendGroup(group, fromBuffer, whereBufferQian, tempclass, Alias1, whereAnd, values);
@@ -1204,17 +1211,17 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 							whereOr.append(" and ( ");
 						}
 						appendGroup(group, fromBuffer, whereBufferQian, tempclass, Alias1, whereOr, values);
-//						tempList.add(group.getPropertyValue1());
-//						values.remove(group.getPropertyValue1());
+						// tempList.add(group.getPropertyValue1());
+						// values.remove(group.getPropertyValue1());
 					}
 
 				}
 				if (!whereOr.toString().equals("")) {
 					whereOr.append(" ) ");
 				}
-//				for (Object temp : tempList) {
-//					values.add(temp);
-//				}
+				// for (Object temp : tempList) {
+				// values.add(temp);
+				// }
 				whereBufferHou.append(whereAnd).append(whereOr);
 			}
 		}

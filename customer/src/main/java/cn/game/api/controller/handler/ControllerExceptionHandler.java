@@ -35,7 +35,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import cn.game.api.controller.req.BaseResponse;
+import cn.game.api.controller.resp.BaseResponse;
 import cn.game.api.util.GameApiUtils;
 
 

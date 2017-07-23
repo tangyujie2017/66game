@@ -15,7 +15,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
-@Entity(name="player_game_result")
+@Entity
 public class PlayerGameResult implements Serializable{
 	
 	private static final long serialVersionUID = -4523597277367945688L;
@@ -39,7 +39,7 @@ public class PlayerGameResult implements Serializable{
 	private Long outTotalScore;
 	
 	@Column(name = "result_total_score")
-	private Long resultTotalScore;//平台相对于这个客户赚？赔
+	private Long resultTotalScore;//平台相对于这个批次赚？赔
 	
 	@Column
 	private Integer type;//0：表示赚1：表示赔

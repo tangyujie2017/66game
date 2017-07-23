@@ -12,7 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-@Entity(name="user_game_result")
+@Entity
 public class UserGameResult {
   
 	@Id
